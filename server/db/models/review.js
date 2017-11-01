@@ -1,6 +1,7 @@
 'use strict'
 
 const {STRING, INTEGER, TEXT} = require('sequelize')
+const db  = require('../db');
 
 const Review = db.define('review', {
   stars: {
@@ -11,8 +12,12 @@ const Review = db.define('review', {
     }
   },
   title: STRING,
-  text: TEXT,
-
+  text: {
+    type: TEXT,
+    validate: {
+      len: [25, 2500]
+    }
+  }
 });
 
 module.exports = Review;
