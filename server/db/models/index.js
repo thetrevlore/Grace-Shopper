@@ -4,7 +4,7 @@ const Category = require('./category')
 
 Product.hasMany(Review);
 Category.hasMany(Product);
-Product.belongsToMany(Order, {through: OrderItem});
+Product.belongsToMany(Order, {as: OrderItemId});
 Review.belongsTo(Product);
 Review.belongsTo(User, {as: 'author'});
 
