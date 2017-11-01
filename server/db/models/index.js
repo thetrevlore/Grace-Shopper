@@ -5,8 +5,8 @@ const Review = require('./review');
 
 Product.hasMany(Review);
 
-Category.hasMany(Product);
-Product.belongsToMany(Order, {as: OrderItemId});
+// Category.hasMany(Product);
+// Product.belongsToMany(Order, {as: OrderItemId});
 
 Review.belongsTo(Product);
 Review.belongsTo(User, {as: 'author'});
