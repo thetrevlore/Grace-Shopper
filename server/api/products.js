@@ -4,7 +4,7 @@ const {Product} = require('../db/models')
 const { Op } = require('sequelize')
 
 
-//get routes, regular users
+//get routes, non admin users
 
 router.get('/', (req, res, next) => {
   Product.findAll({
@@ -25,6 +25,8 @@ router.get('/:productId', (req, res, next) => {
     })
     .catch(next);
 });
+
+
 
 
 
