@@ -9,7 +9,7 @@ const { Op } = require('sequelize')
 router.get('/', (req, res, next) => {
   Product.findAll({
     where: {
-      inventory: {
+      inventoryAmount: {
         [Op.gt]: 0
       }
     }
