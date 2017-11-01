@@ -16,7 +16,6 @@ function Products (props) {
         products.map(product => {
             return (
               <div className="col-xs-4" key={product.id}>
-                <button style={divStyle} className="btn" name="campusDelete" id={product.id} onClick={handleDeleteClick}>×</button>
                 <NavLink className="thumbnail" to={`/products/${product.id}`}>
                   <img src={product.photos[0]} />
                   <div className="caption">
@@ -41,10 +40,8 @@ const mapStateToProps = function (state) {
 };
 
 const mapDispatchToProps = function (dispatch, ownProps) {
-  return {
-
-    }
+  return {}
   }
-}
+
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Products));
