@@ -1,19 +1,19 @@
 const User = require('./user')
 
 const Product = require('./product');
-const Category = require('./category')
-const Review = require('./review');
-const Order = require('./order')
-
-Product.hasMany(Review);
-Order.hasMany(Product)
-Order.belongsTo(User)
+// const Category = require('./category')
+// const Review = require('./review');
+// // const Order = require('./order')
+//
+// Product.hasMany(Review);
+// Order.hasMany(Product)
+// Order.belongsTo(User)
 // Product.hasMany(Category)
 // Category.hasMany(Product);
 // Product.belongsToMany(Order, {as: OrderItemId});
-
-Review.belongsTo(Product);
-Review.belongsTo(User, {as: 'author'});
+//
+// Review.belongsTo(Product);
+// Review.belongsTo(User, {as: 'author'});
 
 
 /**
@@ -31,8 +31,8 @@ Review.belongsTo(User, {as: 'author'});
  */
 
 module.exports = {
-  User,
-  Order,
-  Category,
+  // User,
+  // Order,
+  // Category,
   Product
 }
