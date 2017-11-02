@@ -35,7 +35,7 @@ router.put('/:orderId', (req, res, next) => {
 })
 
 router.delete('/:orderId', (req, res, next) => {
-  Order.destroy((req.body), {
+  Order.destroy({
     where: {
       id: Number(req.params.orderId)
     }
