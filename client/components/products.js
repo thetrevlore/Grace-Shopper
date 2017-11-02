@@ -5,9 +5,7 @@ import store from '../store/index'
 
 function Products (props) {
   const { products } = props;
-  const divStyle = {
-    position: "absolute"
-  };
+  console.log(props)
 
   return(
     <div>
@@ -15,10 +13,10 @@ function Products (props) {
       {
         products.map(product => {
             return (
-              <div className="col-xs-4" key={product.id}>
-                <NavLink className="thumbnail" to={`/products/${product.id}`}>
+              <div key={product.id}>
+                <NavLink to={`/products/${product.id}`}>
                   <img src={product.photos[0]} />
-                  <div className="caption">
+                  <div>
                     <h5><span>{product.title}</span></h5>
                   </div>
                 </NavLink>
@@ -41,6 +39,7 @@ const mapStateToProps = function (state) {
 
 const mapDispatchToProps = function (dispatch, ownProps) {
   return {}
+
   }
 
 

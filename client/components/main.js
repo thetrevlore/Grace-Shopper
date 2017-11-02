@@ -26,9 +26,9 @@ const Main = (props) => {
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/products">View Catalog</Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              <Link to="/products">View Catalog</Link>
             </div>
         }
       </nav>

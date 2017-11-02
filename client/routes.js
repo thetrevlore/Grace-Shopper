@@ -11,10 +11,10 @@ import store, {me, fetchProducts} from './store'
  * COMPONENT
  */
 class Routes extends Component {
+
   componentDidMount () {
     const productsThunk = fetchProducts;
     store.dispatch(productsThunk);
-
   }
 
   render () {

@@ -19,7 +19,10 @@ export const fetchProducts = () =>
   dispatch =>
     axios.get('/api/products')
       .then( res => res.data)
-      .then( fetchedProducts => dispatch(getAllProducts(fetchedProducts)))
+      .then( fetchedProducts => {
+        console.log('fetchedProducts', fetchedProducts)
+        dispatch(getAllProducts(fetchedProducts))
+      })
       .catch(err => console.log(err));
 
 /**
@@ -28,7 +31,7 @@ export const fetchProducts = () =>
 export default function (products = [], action) {
   switch (action.type) {
     case GET_ALL_PRODUCTS:
-      return products;
+      return action.products;
     default:
       return products
   }
