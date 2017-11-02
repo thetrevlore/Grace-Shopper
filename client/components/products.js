@@ -13,19 +13,20 @@ function Products (props) {
         products.map(product => {
             return (
               <div key={product.id}>
+                <div>
+                  <h3><span>{product.title}</span></h3>
+                </div>
                 <NavLink to={`/products/${product.id}`}>
-                  <img src={product.photos[0]} />
+                  <img src={product.photos[0]} width='200' height='200'/>
                   <div>
-                    <h5><span>{product.title}</span></h5>
+                    <h5><span>{product.description}</span>
+                    <span>{`     $${product.price}`}</span></h5>
                   </div>
                 </NavLink>
               </div>
             )
           }
         )
-      }
-     {
-      //  <Route path="/products/:productId" render={(props) => <SingleProduct {...props} product={this.state.selectedProduct} />} />
       }
     </div>
   )
@@ -41,8 +42,7 @@ const mapStateToProps = function (state) {
 
 const mapDispatchToProps = function (dispatch, ownProps) {
   return {}
-
-  }
+};
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Products));
