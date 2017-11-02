@@ -17,7 +17,7 @@ const Product = db.define('product', {
     defaultValue: ['https://static.webshopapp.com/shops/030495/files/076899443/200x200x2/cactus-euphorbia-hermentiana.jpg']
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   inventoryAmount: {
