@@ -5,7 +5,6 @@ import store from '../store/index'
 
 function Products (props) {
   const { products } = props;
-  console.log(props)
 
   return(
     <div>
@@ -24,6 +23,9 @@ function Products (props) {
             )
           }
         )
+      }
+     {
+      //  <Route path="/products/:productId" render={(props) => <SingleProduct {...props} product={this.state.selectedProduct} />} />
       }
     </div>
   )

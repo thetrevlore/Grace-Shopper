@@ -11,15 +11,20 @@ import store, {me, fetchProducts} from './store'
  * COMPONENT
  */
 class Routes extends Component {
+  constructor() {
+    super();
+    this.state = store.getState();
+  }
 
-  componentDidMount () {
-    const productsThunk = fetchProducts;
+
+  componentWillMount() {
+    const productsThunk = fetchProducts();
     store.dispatch(productsThunk);
   }
 
   render () {
     const {isLoggedIn} = this.props
-
+    console.log('************', store.getState());
     return (
       <Router history={history}>
         <Main>
@@ -28,6 +33,7 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/products" component={Products} />
+            <Route path="/products/:productId" render={(props) => <SingleProduct {...props} product={this.state.selectedProduct} />} />
             {
               // isLoggedIn &&
                 <Switch>
