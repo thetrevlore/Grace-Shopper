@@ -1,19 +1,23 @@
 const User = require('./user')
 
 const Product = require('./product');
+const Order = require('./order')
+const OrderItem = require('./orderItem')
 // const Category = require('./category')
 // const Review = require('./review');
-// // const Order = require('./order')
 //
 // Product.hasMany(Review);
-// Order.hasMany(Product)
-// Order.belongsTo(User)
 // Product.hasMany(Category)
 // Category.hasMany(Product);
-// Product.belongsToMany(Order, {as: OrderItemId});
-//
 // Review.belongsTo(Product);
 // Review.belongsTo(User, {as: 'author'});
+Order.belongsTo(User)
+Order.belongsToMany(Product, {
+  through:
+    { model: OrderItem,
+      unique: false,
+    }
+})
 
 
 /**

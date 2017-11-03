@@ -1,51 +1,51 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
-import store from '../store/index';
+import AddProduct from './AddProduct'
+import store, { addToCart, removeFromCart } from '../store/index';
 
-const testDummy = {
-  id: 2,
-  title: 'US Dollar',
-  description: 'Popular currency in the 20th and 21st centuries.',
-  price: '9 btc',
-  photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/US20-front.jpg/250px-US20-front.jpg'],
-  inventoryAmount: 1111
-}
-
-export const SingleProduct = (props) => {
-  // const itemId = props.match.params.id
-  // const itemObj = props.products.filter((product) => {
-  //   return product.id === itemId;
-  // })
+const SingleProduct = props => {
+  const itemId = +props.match.params.id
+  const { products } = props;
+  const selectedProduct = products.filter( product => product.id === itemId)[0]
+  console.log(props.cart)
 
   return (
     <div>
-      <h1>{testDummy.title}</h1>
+      <h1>{selectedProduct.title}</h1>
       {
-        testDummy.photos.map((photo) => (<span key={photo}>
+        selectedProduct.photos.map((photo) => (<span key={photo}>
           <img src={photo} width="200" />
           </span>))
       }
       <div>
         <h3>Description</h3>
-        <p>{testDummy.description}</p>
+        <p>{selectedProduct.description}</p>
       </div>
       <div>
         <h3>Price</h3>
-        <p>{testDummy.price}</p>
+        <p>{selectedProduct.price}</p>
       </div>
+      <AddProduct
+        selectedProduct={selectedProduct}
+        addToCart={props.addToCart}
+        cart = {props.cart}
+      />
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    products: state.products
-  }
-}
+const mapStateToProps = ({ products, cart }) => ({ products, cart })
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (product, quantity) => {
+      return dispatch(addToCart(product, quantity))
+    },
+    removeFromCart: (product) => {
+      return dispatch(removeFromCart(product))
+    }
+  }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
