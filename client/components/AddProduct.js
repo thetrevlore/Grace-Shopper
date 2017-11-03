@@ -34,7 +34,7 @@ export default class AddProduct extends Component {
             {
               <option key={1} value={1}>{1}</option>
               // buckets.map((_, index) => index)
-              //   .map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
+              //   .map( quantity => <option key={quantity} value={quantity}>{quantity}</option>)
             }
           </select>
         </form>
