@@ -19,7 +19,9 @@ class Routes extends Component {
 
   componentWillMount() {
     const productsThunk = fetchProducts();
+    const userThunk = me();
     store.dispatch(productsThunk);
+    store.dispatch(userThunk);
   }
 
   render () {
