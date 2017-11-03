@@ -1,19 +1,30 @@
 
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store, {removeFromCart}from '../store/index';
+import store, { removeFromCart } from '../store/index';
+import CartList from './cartList';
 
-const Cart = (props) => {
-  return (
-    <h1>Hello World</h1>
-  );
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    return (
+      <div>
+        <h1>Your mama's Cart</h1>
+        <CartList items={this.props.cart}/>
+      </div>
+    );
+  }
 }
 
 
-const mapStateToProps = ({ cart }) => ({ cart });
+const mapStateToProps = (state) => ({cart: state.cart});
 
 const mapDispatchToProps = (dispatch) => {
   return {
