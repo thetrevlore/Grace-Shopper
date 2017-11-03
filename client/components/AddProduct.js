@@ -38,10 +38,34 @@ export default class AddProduct extends Component {
             }
           </select>
         </form>
-        <button onClick={() => { this.props.addToCart(this.selectedProduct, this.state.quantity) }}>
+        <button onClick={() => { props.handleAddToCart(e, this.state.quantity)}}>
           Add to cart
         </button>
       </div>
     )
   }
 }
+
+const mapDispatchToProps = function (dispatch, ownProps) {
+  return {
+    handleAddToCart (evt, quantity) {
+      ownProps.addToCart(ownProps.selectedProduct, quantity);
+      postItemToCart(ownProps.selectedProduct, quantity);
+    },
+
+    handleSubmitUpdate(evt){
+      evt.preventDefault();
+      const updateCampus = {
+        name: evt.target.campusName.value,
+        location: evt.target.campusLocation.value,
+        image: evt.target.campusImage.value
+      };
+      dispatch(putCampus(updateCampus, evt.target.campusName.title, ownProps.history));
+    }
+  };
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewCampus));

@@ -4,6 +4,7 @@ import axios from 'axios'
  */
 const ADD_TO_CART = 'ADD_TO_CART'
 const GET_CART = 'GET_CART'
+const POST_ITEM_TO_CART = 'POST_ITEM_TO_CART'
 
 /**
  * INITIAL STATE
@@ -15,8 +16,9 @@ const initialState = {}
  * ACTION CREATORS
  */
 
-export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity })
-export const getCart = cart => ({ type: GET_CART, cart })
+export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
+export const getCart = cart => ({ type: GET_CART, cart });
+export const postItemToCart = (product, quantity) => {};
 
 /**
  * THUNK CREATORS
