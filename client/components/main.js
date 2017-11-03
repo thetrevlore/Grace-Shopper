@@ -28,6 +28,7 @@ const Main = (props) => {
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              <Link to="/products">View Catalog</Link>
             </div>
         }
       </nav>
@@ -44,7 +45,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id
   }
-}
+};
 
 const mapDispatch = (dispatch) => {
   return {
@@ -52,7 +53,7 @@ const mapDispatch = (dispatch) => {
       dispatch(logout())
     }
   }
-}
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes

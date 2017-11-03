@@ -3,7 +3,6 @@ const router = require('express').Router()
 const {Product} = require('../db/models')
 const { Op } = require('sequelize')
 
-
 //get routes, non admin users
 
 router.get('/', (req, res, next) => {
@@ -25,10 +24,5 @@ router.get('/:productId', (req, res, next) => {
     })
     .catch(next);
 });
-
-
-
-
-
 
 module.exports = router
