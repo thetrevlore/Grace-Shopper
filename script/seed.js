@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Order, Category, Product} = require('../server/db/models')
 
 async function seed () {
   await db.sync({force: true})
@@ -20,11 +20,17 @@ async function seed () {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'murphy@email.com', password: '234'})
+  ])
+  const products = await Promise.all([
+    Product.create({title: 'Dollar', description: 'US currency', photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/United_States_one_dollar_bill%2C_obverse.jpg/1200px-United_States_one_dollar_bill%2C_obverse.jpg'], price: 1, inventoryAmount: 18}),
+    Product.create({title: 'Peso', description: 'Mexican currency', photos: ['http://www.coinfactswiki.com/w/images/thumb/a/ae/Mexico_1873Mo_peso_oro_rev_Stacks_110-1451.jpg/300px-Mexico_1873Mo_peso_oro_rev_Stacks_110-1451.jpg'], price: 19, inventoryAmount: 3}),
+    Product.create({title: 'Rupee', description: 'Indian currency', photos: ['http://static.sify.com/cms/image/qbejGmdiifdfj.jpg'], price: 65, inventoryAmount: 9}),
+    Product.create({title: 'Yen', description: 'Chinese currency', photos: ['http://www.chinatoday.com/fin/mon/rmb-1yuan-new1.jpg'], price: 114, inventoryAmount: 66})
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${users.length} users and ${products.length} products`)
   console.log(`seeded successfully`)
 }
 
