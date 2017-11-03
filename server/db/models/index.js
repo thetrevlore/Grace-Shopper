@@ -3,7 +3,7 @@ const User = require('./user')
 const Product = require('./product');
 // const Category = require('./category')
 // const Review = require('./review');
-// // const Order = require('./order')
+const Order = require('./order')
 //
 // Product.hasMany(Review);
 // Order.hasMany(Product)
@@ -31,8 +31,8 @@ const Product = require('./product');
  */
 
 module.exports = {
-  // User,
-  // Order,
+  User,
+  Order,
   // Category,
   Product
 }
