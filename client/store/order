@@ -1,0 +1,49 @@
+import axios from 'axios'
+
+
+const intitialState = []
+/**
+ * ACTION TYPES
+ */
+const POST_ORDER = 'POST_ORDER';
+const ADD_ORDER = 'ADD_ORDER';
+
+/**
+ * ACTION CREATORS
+ */
+
+const addOrder = order => ({ action: ADD_ORDER, order })
+
+/**
+ * THUNK CREATORS
+ */
+
+const postOrder = (order, products) => function postOrderThunk (dispatch){
+  axios.post('/api/order', order)
+    .then(res => res.data)
+    .then(createdOrder => {
+      products.forEach(product => {
+
+        let productToAdd = {
+          productId: product.id,
+          quantity: product.quantity,
+          orderId: createdOrder.id
+        }
+
+        axios.post('api/orderItem', productToAdd)
+      })
+        .then(completedOrder => dispatch(addOrder(completedOrder)))
+    })
+}
+
+/**
+ * REDUCER
+ */
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case ADD_ORDER:
+      return [...state, action.order];
+    default:
+      return state
+  }
+}
