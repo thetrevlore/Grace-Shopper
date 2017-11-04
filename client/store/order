@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { browserHistory } from 'react-router';
-
 
 const intitialState = []
 /**
@@ -26,12 +24,7 @@ export const postOrder = (cart, history) =>
     const { user, address } = getState();
     axios.post('/api/orders', {
       userId: user.id,
-      orderItems: cart, //cart should be an array of item objects with title?, id, quantity, price
-      // orderItems: cart.map(item => ({
-      //   productId: item.product.id,
-      //   quantity: item.quantity,
-      //   price: item.product.price
-      // })),
+      orderItems: cart, //cart should be an array of item objects with title, id, quantity, price
       address: address
     })
       .then(() => {

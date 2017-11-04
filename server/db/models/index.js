@@ -16,8 +16,6 @@ Order.belongsTo(User);
 User.hasMany(Order);
 OrderItem.belongsTo(Order);
 Order.hasMany(OrderItem);
-OrderItem.belongsTo(Product);
-Product.hasMany(OrderItem);
 
 /**
  * If we had any associations to make, this would be a great place to put them!

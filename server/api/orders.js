@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, Product, OrderItem } = require('../db/models')
+const { Order, OrderItem } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:orderId', (req, res, next) => {
   Order.findOne(
-    {where: {
+    { where: {
       id: Number(req.params.orderId)
     }}
   )
