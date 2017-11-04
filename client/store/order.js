@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const intitialState = []
+const initialState = []
 /**
  * ACTION TYPES
  */
-const POST_ORDER = 'POST_ORDER';
+
 const ADD_ORDER = 'ADD_ORDER';
 
 /**
@@ -17,25 +17,19 @@ const addOrder = order => ({ action: ADD_ORDER, order })
  * THUNK CREATORS
  */
 
-
-export const postOrder = (cart, history) =>
+export const postOrder = (order, history) =>
 
   function postOrderThunk (dispatch, getState){
-    const { user, address } = getState();
-    axios.post('/api/orders', {
-      userId: user.id,
-      orderItems: cart, //cart should be an array of item objects with title, id, quantity, price
-      address: address
-    })
+    axios.post('/api/orders', order)
       .then(() => {
-        history.push('/products'); //this is a placeholder, we can push the page to an order confirmation later
+        history.push('/'); //this is a placeholder, we can push the page to an order confirmation later
       })
       .catch(console.error);
   };
-
 /**
  * REDUCER
  */
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case ADD_ORDER:

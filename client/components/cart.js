@@ -1,42 +1,60 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store, { removeFromCart } from '../store/index';
+import store, { removeFromCart, postOrder } from '../store/index';
 import CartList from './cartList';
 
-class Cart extends Component {
-  constructor(props) {
-    super(props);
-  }
+function Cart(props){
 
-  render() {
+    const { cartArray } = props
+    const order = {
+      userId: props.user.id,
+      email: props.user.email,
+      orderItems: props.cartArray,
+      status: 'Completed',
+      hasBeenPlaced: true
+    }
+
     return (
       <div>
         <h2>Your Cart</h2>
-        <CartList items={this.props.cart} delete={this.props.removeFromCart}/>
+        <CartList items={cartArray} delete={props.removeFromCart}/>
         <div>
         <h4>Enter shipping information:</h4>
-        <form className="addForm">
-          <input type="text" name="firstName" placeholder="Enter first name..." /><br/>
-          <input type="text" name="lastName" placeholder="Enter last name..." /><br/>
-          <input type="text" name="address" placeholder="Enter address..." /><br/>
-          <input type="submit" value="Place Order" /><br />
+        <form className="addForm" onSubmit={(e)=>props.handleSubmitOrder(e, order)}>
+          <input
+            title=""
+            type="text"
+            name="address"
+            placeholder="Enter address"
+          />
+          <input type="submit" value="Place Order"  /><br />
         </form>
         </div>
         <Link to="/products">Continue shopping.</Link>
       </div>
     );
-  }
 }
 
 
-const mapStateToProps = (state) => ({cart: state.cart});
+const mapStateToProps = (state) => ({
+  cartArray: Object.keys(state.cart).map(item => {
+    state.cart[item].productId = +item
+    return state.cart[item]
+  }),
+  user: state.user
+});
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     removeFromCart: (product) => {
       return dispatch(removeFromCart(product))
-    }
+    },
+    handleSubmitOrder (evt, order) {
+      evt.preventDefault();
+      order.shippingAddress = evt.target.address.value
+      dispatch(postOrder(order, ownProps.history));
+    },
   }
 }
 

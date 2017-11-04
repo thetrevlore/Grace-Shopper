@@ -19,12 +19,12 @@ const CartList = (props) => {
       <tbody>
         {
           cartItems &&
-          Object.keys(cartItems).map((key, idx) => {
+          cartItems.map((item, idx) => {
              return (
               <tr key={idx}>
-                <td>{cartItems[key].title}</td>
-                <td>{cartItems[key].price}</td>
-                <td>{cartItems[key].quantity}</td>
+                <td>{item.title}</td>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
                 <td><button onClick={props.delete}>&times;</button></td>
               </tr>
             )

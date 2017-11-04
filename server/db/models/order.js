@@ -7,6 +7,12 @@ const Order = db.define('order', {
     defaultValue: 'Created'
   },
   shippingAddress: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+    isEmail: true
+    }
+  },
   hasBeenPlaced: { type: Sequelize.BOOLEAN, defaultValue: false }
 })
 
