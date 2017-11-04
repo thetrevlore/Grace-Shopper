@@ -13,11 +13,19 @@ class Cart extends Component {
   }
 
   render() {
-
     return (
       <div>
-        <h1>Your mama's Cart</h1>
-        <CartList items={this.props.cart}/>
+        <h1>Your Cart</h1>
+        <CartList items={this.props.cart} delete={this.props.removeFromCart}/>
+        <div>
+        <h4>Enter shipping information:</h4>
+        <form className="addForm">
+          <input type="text" name="firstName" placeholder="Enter first name..." /><br/>
+          <input type="text" name="lastName" placeholder="Enter last name..." /><br/>
+          <input type="text" name="address" placeholder="Enter address..." /><br/>
+          <input type="submit" value="Place Order" /><br />
+        </form>
+        </div>
       </div>
     );
   }

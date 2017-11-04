@@ -12,7 +12,8 @@ const CartList = (props) => {
         <tr>
           <th>Item</th>
           <th>Price</th>
-          <th>Qty</th>
+          <th>Quantity</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +25,7 @@ const CartList = (props) => {
                 <td>{cartItems[key].title}</td>
                 <td>{cartItems[key].price}</td>
                 <td>{cartItems[key].quantity}</td>
+                <td><button onClick={props.delete}>&times;</button></td>
               </tr>
             )
           })
