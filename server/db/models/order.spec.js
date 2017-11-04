@@ -24,10 +24,11 @@ describe('Order model', () => {
         hasBeenPlaced: true
       };
 
-      beforeEach((orderRequest, purchase) => {
+      beforeEach(() => {
         return Order.create(orderRequest)
         .then( order => {
           builtOrder = order;
+          purchase.orderId = order.id
           OrderItem.create(purchase)
             .then( orderItem =>{
               item = orderItem

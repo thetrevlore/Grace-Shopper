@@ -24,6 +24,17 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.post('/:orderId', (req, res, next) => {
+  OrderItem.findOrCreate({
+    where: {
+      OrderId: +req.params.orderId
+    }
+  })
+    .then( addedOrderItem => res.status(204).json(addedOrderItem))
+    .catch(next)
+})
+
+
 router.put('/:orderId', (req, res, next) => {
   Order.update(req.body, {
     where: {
