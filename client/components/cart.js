@@ -1,8 +1,5 @@
-
-'use strict';
-
 import React, { Component } from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import store, { removeFromCart } from '../store/index';
 import CartList from './cartList';
@@ -15,7 +12,7 @@ class Cart extends Component {
   render() {
     return (
       <div>
-        <h1>Your Cart</h1>
+        <h2>Your Cart</h2>
         <CartList items={this.props.cart} delete={this.props.removeFromCart}/>
         <div>
         <h4>Enter shipping information:</h4>
@@ -26,6 +23,7 @@ class Cart extends Component {
           <input type="submit" value="Place Order" /><br />
         </form>
         </div>
+        <Link to="/products">Continue shopping.</Link>
       </div>
     );
   }
