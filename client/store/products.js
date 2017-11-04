@@ -20,7 +20,7 @@ export const fetchProducts = () =>
     axios.get('/api/products')
       .then( res => res.data)
       .then( fetchedProducts => {
-        console.log('fetchedProducts', fetchedProducts)
+
         dispatch(getAllProducts(fetchedProducts))
       })
       .catch(err => console.log(err));

@@ -11,6 +11,7 @@ export const UserHome = (props) => {
   return (
     <div>
       <h3>{email ? `Welcome, ${email}` : 'Welcome to the world\'s greatest money store.'}</h3>
+      <h4>{}</h4>
     </div>
   )
 }
