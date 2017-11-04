@@ -5,8 +5,8 @@ import store from '../store/index';
 
 const CartList = (props) => {
   const cartItems = props.items;
-  console.log('carttttttt', cartItems)
   return (
+    <div>
     <table>
       <thead>
         <tr>
@@ -17,21 +17,20 @@ const CartList = (props) => {
       </thead>
       <tbody>
         {
-          cartItems.length &&
-          cartItems.map(item => {
-            //cart is an obj, needs a for in loop???
-            return (
-              <tr key={item.id}>
-                <td>{item.title}</td>
-                <td>{item.price}</td>
-                <td>{item.quantity}</td>
+          cartItems &&
+          Object.keys(cartItems).map((key, idx) => {
+             return (
+              <tr key={idx}>
+                <td>{cartItems[key].title}</td>
+                <td>{cartItems[key].price}</td>
+                <td>{cartItems[key].quantity}</td>
               </tr>
             )
           })
         }
       </tbody>
     </table>
-  )
+    </div>)
 }
 
 export default CartList;
