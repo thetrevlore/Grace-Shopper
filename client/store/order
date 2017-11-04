@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { browserHistory } from 'react-router';
 
 
 const intitialState = []
@@ -18,23 +19,26 @@ const addOrder = order => ({ action: ADD_ORDER, order })
  * THUNK CREATORS
  */
 
-const postOrder = (order, products) => function postOrderThunk (dispatch){
-  axios.post('/api/order', order)
-    .then(res => res.data)
-    .then(createdOrder => {
-      products.forEach(product => {
 
-        let productToAdd = {
-          productId: product.id,
-          quantity: product.quantity,
-          orderId: createdOrder.id
-        }
+export const postOrder = (cart, history) =>
 
-        axios.post('api/orderItem', productToAdd)
-      })
-        .then(completedOrder => dispatch(addOrder(completedOrder)))
+  function postOrderThunk (dispatch, getState){
+    const { user, address } = getState();
+    axios.post('/api/orders', {
+      userId: user.id,
+      orderItems: cart, //cart should be an array of item objects with title?, id, quantity, price
+      // orderItems: cart.map(item => ({
+      //   productId: item.product.id,
+      //   quantity: item.quantity,
+      //   price: item.product.price
+      // })),
+      address: address
     })
-}
+      .then(() => {
+        history.push('/products'); //this is a placeholder, we can push the page to an order confirmation later
+      })
+      .catch(console.error);
+  };
 
 /**
  * REDUCER

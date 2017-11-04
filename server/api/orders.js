@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const { Order, Product, OrderItem } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -19,21 +19,16 @@ router.get('/:orderId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Order.create(req.body)
-    .then(newOrder => res.status(201).json(newOrder))
-    .catch(next)
-})
+  const { body } = req;
 
-router.post('/:orderId', (req, res, next) => {
-  OrderItem.findOrCreate({
-    where: {
-      OrderId: +req.params.orderId
-    }
-  })
-    .then( addedOrderItem => res.status(204).json(addedOrderItem))
-    .catch(next)
-})
-
+  return Order.create(
+    body,
+    {
+      returning: true,
+      include: [ { model: OrderItem } ]
+    })
+    .then((order) => res.status(201).json(order)).catch(next)
+});
 
 router.put('/:orderId', (req, res, next) => {
   Order.update(req.body, {
