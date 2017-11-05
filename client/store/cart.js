@@ -45,13 +45,17 @@ export default function (state = initialState, action) {
   switch (action.type) {
 
     case ADD_TO_CART:
-      const item = {
+      if (newState[action.product.id]){
+        newState[action.product.id].quantity = newState[action.product.id].quantity + action.quantity
+      } else {
+        const item = {
           title: action.product.title,
           quantity: action.quantity,
           price: action.product.price,
           photo: action.product.photos[0],
         }
-      newState[action.product.id] = item
+        newState[action.product.id] = item
+      }
       return newState
 
     case GET_CART:
