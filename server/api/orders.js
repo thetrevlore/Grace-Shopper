@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order} = require('../db/models')
+const { Order, OrderItem } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:orderId', (req, res, next) => {
   Order.findOne(
-    {where: {
+    { where: {
       id: Number(req.params.orderId)
     }}
   )
@@ -19,10 +19,16 @@ router.get('/:orderId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Order.create(req.body)
-    .then(newOrder => res.status(201).json(newOrder))
-    .catch(next)
-})
+  const { body } = req;
+
+  return Order.create(
+    body,
+    {
+      returning: true,
+      include: [ { model: OrderItem } ]
+    })
+    .then((order) => res.status(201).json(order)).catch(next)
+});
 
 router.put('/:orderId', (req, res, next) => {
   Order.update(req.body, {

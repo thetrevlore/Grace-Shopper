@@ -2,14 +2,21 @@ const db = require('../db')
 const Sequelize = require('sequelize')
 
 const OrderItem = db.define('orderItem', {
-  id: {
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  productId: {
     type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    allowNull: false
   },
   quantity: {
     type: Sequelize.INTEGER,
   },
+  price: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  }
 })
 
 module.exports = OrderItem

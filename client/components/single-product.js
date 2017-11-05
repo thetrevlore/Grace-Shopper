@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 import AddProduct from './AddProduct'
-import store, { addToCart, removeFromCart } from '../store/index';
+import store, { addToCart, postItemToCart, removeFromCart } from '../store/index';
 
 // const SingleProduct = props => {
 //   const itemId = +props.match.params.id
@@ -63,6 +63,7 @@ class SingleProduct extends Component {
           selectedProduct={selectedProduct}
           addToCart={this.props.addToCart}
           cart = {this.props.cart}
+          postItemToCart={this.props.postItemToCart}
         />
       </div>
     )

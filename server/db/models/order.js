@@ -3,24 +3,17 @@ const db = require('../db')
 
 const Order = db.define('order', {
   status: {
-    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
+    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed'),
+    defaultValue: 'Created'
   },
   shippingAddress: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+    isEmail: true
+    }
+  },
   hasBeenPlaced: { type: Sequelize.BOOLEAN, defaultValue: false }
 })
-
-// const Order = db.define('order', {
-//   totalPrice: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: 0.00
-//   },
-//   status: {
-//     type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
-//   },
-//   productQuantity: { type: Sequelize.INTEGER, allowNull: false },
-//   productPrice: { type: Sequelize.INTEGER, allowNull: false },
-//   productId: { type: Sequelize.INTEGER, allowNull: false },
-//   hasBeenPlaced: { type: Sequelize.BOOLEAN, defaultValue: false }
-// })
 
 module.exports = Order

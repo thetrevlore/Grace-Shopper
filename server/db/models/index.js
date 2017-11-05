@@ -12,14 +12,10 @@ const OrderItem = require('./orderItem')
 // Category.hasMany(Product);
 // Review.belongsTo(Product);
 // Review.belongsTo(User, {as: 'author'});
-Order.belongsTo(User)
-Order.belongsToMany(Product, {
-  through:
-    { model: OrderItem,
-      unique: false,
-    }
-})
-
+Order.belongsTo(User);
+User.hasMany(Order);
+OrderItem.belongsTo(Order);
+Order.hasMany(OrderItem);
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -38,6 +34,7 @@ Order.belongsToMany(Product, {
 module.exports = {
   User,
   Order,
+  OrderItem,
   // Category,
   Product
 }
