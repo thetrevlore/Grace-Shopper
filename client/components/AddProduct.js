@@ -12,7 +12,8 @@ function AddProduct (props) {
       <form>
         <select onChange={(e)=> quantity = +e.target.value} >
           {
-            new Array(inventoryAmount+1).fill().map((_, index) => index)
+            new Array(inventoryAmount+1).fill()
+              .map((_, index) => index)
               .map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
           }
         </select>
