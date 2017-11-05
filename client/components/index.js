@@ -11,3 +11,4 @@ export {default as Products} from './products'
 export {default as Cart} from './cart'
 export {default as Welcome} from './welcome';
 export {default as NotFound} from './notfound';
+export {default as OrderConfirmation} from './OrderConfirmation.js'
