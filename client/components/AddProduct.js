@@ -29,11 +29,11 @@ const mapStateToProps = (state, ownProps) => ({
   selectedProduct: ownProps.selectedProduct
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleSubmit(selectedProduct, quantity){
-      console.log('in handleSubmit', quantity)
       dispatch(addToCart(selectedProduct, quantity))
+      ownProps.history.push('/products')
     }
   }
 }
