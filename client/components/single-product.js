@@ -1,77 +1,45 @@
-import React, { Component } from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
-import {connect} from 'react-redux';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import AddProduct from './AddProduct'
-import store, { addToCart, postItemToCart, removeFromCart } from '../store/index';
+import { addToCart, postItemToCart, removeFromCart } from '../store';
 
-// const SingleProduct = props => {
-//   const itemId = +props.match.params.id
-//   const { products } = props;
-//   const selectedProduct = products.filter( product => product.id === itemId)[0];
-//   console.log('props', selectedProduct)
-//
-//   return (
-//     <div>
-//       <h1>{selectedProduct.title}</h1>
-//       {
-//         selectedProduct.photos.map((photo) => (<span key={photo}>
-//           <img src={photo} width="200" />
-//           </span>))
-//       }
-//       <div>
-//         <h3>Description</h3>
-//         <p>{selectedProduct.description}</p>
-//       </div>
-//       <div>
-//         <h3>Price</h3>
-//         <p>{selectedProduct.price}</p>
-//       </div>
-//       <AddProduct
-//         selectedProduct={selectedProduct}
-//         addToCart={props.addToCart}
-//         cart = {props.cart}
-//       />
-//     </div>
-//   )
-// }
+const SingleProduct = props => {
+  console.log('singleProduct props', props)
+  const itemId = +props.match.params.id
+  const { products } = props;
+  const selectedProduct = products.filter(product => product.id === itemId)[0];
+  console.log('props', selectedProduct)
 
-class SingleProduct extends Component {
-
-  render (){
-    const itemId = +this.props.match.params.id
-    const { products } = this.props;
-    const selectedProduct = products.filter( product => product.id === itemId)[0];
-    console.log('props', selectedProduct)
-
-    return (
-      <div>
-        <h1>{selectedProduct.title}</h1>
-        {
-          selectedProduct.photos.map((photo) => (<span key={photo}>
-          <img src={photo} width="200" />
+  return (
+    <div>
+      <h1>{selectedProduct.title}</h1>
+      {
+        selectedProduct.photos.map((photo) => (<span key={photo}>
+          <img src={photo} width="200"/>
           </span>))
-        }
-        <div>
-          <h3>Description</h3>
-          <p>{selectedProduct.description}</p>
-        </div>
-        <div>
-          <h3>Price</h3>
-          <p>{selectedProduct.price}</p>
-        </div>
-        <AddProduct
-          selectedProduct={selectedProduct}
-          addToCart={this.props.addToCart}
-          cart = {this.props.cart}
-          postItemToCart={this.props.postItemToCart}
-        />
+      }
+      <div>
+        <h3>Description</h3>
+        <p>{selectedProduct.description}</p>
       </div>
-    )
-  }
+      <div>
+        <h3>Price</h3>
+        <p>{selectedProduct.price}</p>
+      </div>
+      <AddProduct
+        selectedProduct={selectedProduct}
+        addToCart={props.addToCart}
+        cart={props.cart}
+        postItemToCart={props.postItemToCart}
+      />
+    </div>
+  )
 }
 
-
-const mapStateToProps = ({ products, cart }) => ({ products, cart })
+const mapStateToProps = (state) => ({
+  products: state.products,
+  cart:state.cart })
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -84,6 +52,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const connectedSingleProduct = withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
-export default connectedSingleProduct
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
 
