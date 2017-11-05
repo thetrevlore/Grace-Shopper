@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store, { removeFromCart, postOrder } from '../store/index';
+import store, { removeFromCart, postOrder, clearCart } from '../store/index';
 import CartList from './cartList';
 
 function Cart(props){
@@ -54,6 +54,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       evt.preventDefault();
       order.shippingAddress = evt.target.address.value
       dispatch(postOrder(order, ownProps.history));
+      dispatch(clearCart());
     },
   }
 }
