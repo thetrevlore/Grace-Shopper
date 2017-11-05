@@ -4,6 +4,7 @@
 const ADD_TO_CART = 'ADD_TO_CART'
 const GET_CART = 'GET_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const CLEAR_CART = 'CLEAR_CART'
 
 /**
  * INITIAL STATE
@@ -18,6 +19,7 @@ const initialState = {}
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
 export const removeFromCart = productId => ({ type: REMOVE_FROM_CART, productId })
+export const clearCart = () => ({ type: CLEAR_CART });
 
 /**
  * THUNK CREATORS
@@ -52,6 +54,9 @@ export default function (state = initialState, action) {
     case REMOVE_FROM_CART:
       delete newState[action.productId]
       return newState
+
+    case CLEAR_CART:
+      return initialState;
 
     default:
       return state
