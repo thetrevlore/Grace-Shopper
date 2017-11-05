@@ -21,8 +21,9 @@ export const postOrder = (order, history) =>
 
   function postOrderThunk (dispatch, getState){
     axios.post('/api/orders', order)
-      .then(() => {
-        history.push('/'); //this is a placeholder, we can push the page to an order confirmation later
+      .then(res=>res.data)
+      .then((createdOrder) => {
+        history.push(`/order-confirmation/${createdOrder.id}`); //this is a placeholder, we can push the page to an order confirmation later
       })
       .catch(console.error);
   };
