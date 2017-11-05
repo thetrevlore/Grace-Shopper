@@ -26,13 +26,15 @@ router.get('/:productId', (req, res, next) => {
 });
 
 router.put('/:productId', (req, res, next) => {
-  Product.update(req.body, {
+  console.log('reqbod', req.body)
+  Product.find({
     where: {
       id: +req.params.productId
     }
   })
-    .then(updatedProduct => res.status(204).json(updatedProduct))
-    .catch(next)
+  .then(product => product.update(req.body))
+  .then(() => res.status(204))
+  .catch(next)
 })
 
 module.exports = router

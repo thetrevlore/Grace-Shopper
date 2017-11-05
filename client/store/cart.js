@@ -17,7 +17,6 @@ const initialState = {}
 
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
-export const postItemToCart = (product, quantity) => {};
 export const removeFromCart = productId => ({ type: REMOVE_FROM_CART, productId })
 
 /**

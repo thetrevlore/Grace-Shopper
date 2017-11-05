@@ -1,5 +1,5 @@
 import React from 'react'
-import { addToCart } from '../store/cart'
+import { addToCart, updateInventoryThunk } from '../store'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -33,6 +33,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleSubmit(selectedProduct, quantity){
       dispatch(addToCart(selectedProduct, quantity))
+      selectedProduct.inventoryAmount-=quantity
+      dispatch(updateInventoryThunk(selectedProduct))
       ownProps.history.push('/products')
     }
   }

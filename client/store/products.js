@@ -26,12 +26,12 @@ export const fetchProducts = () =>
       })
       .catch(err => console.log(err));
 
-export const updateInventoryThunk = newInventoryAmount =>
+export const updateInventoryThunk = (selectedProduct) =>
   dispatch =>
-    axios.put('/api/products', { newInventoryAmount })
+    axios.put(`/api/products/${selectedProduct.id}`, { inventoryAmount: +selectedProduct.inventoryAmount })
       .then( res => res.data)
-      .then( updatedInventoryAmount => {
-        dispatch(updatedInventoryAmount(updatedInventoryAmount))
+      .then(() => {
+        dispatch(updateInventory(selectedProduct))
       })
       .catch(err => console.log(err));
 
