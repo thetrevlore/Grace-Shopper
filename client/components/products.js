@@ -1,12 +1,13 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store from '../store/index'
+import AddProduct from './AddProduct'
+import store, { addToCart, postItemToCart, removeFromCart } from '../store/index';
 
 function Products (props) {
-  const { products } = props;
+  const { products, addToCart, cart } = props;
 
-  return(
+  return (
     <div>
       <h1>Products</h1>
       {
@@ -23,6 +24,11 @@ function Products (props) {
                     <span>{`     $${product.price}`}</span></h5>
                   </div>
                 </NavLink>
+                <AddProduct
+                  selectedProduct={product}
+                  addToCart={props.addToCart}
+                  cart = {props.cart}
+                />
               </div>
             )
           }
@@ -32,17 +38,19 @@ function Products (props) {
   )
 }
 
-
-
 const mapStateToProps = function (state) {
   return {
     products: state.products,
+    cart: state.cart
   }
 };
 
-const mapDispatchToProps = function (dispatch, ownProps) {
-  return {}
-};
-
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (product, quantity) => {
+      return dispatch(addToCart(product, quantity))
+    }
+  }
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Products));
