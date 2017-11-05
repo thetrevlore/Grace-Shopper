@@ -31,6 +31,7 @@ function Cart(props){
           <input type="submit" value="Place Order"  /><br />
         </form>
         </div>
+        <br />
         <Link to="/products">Continue shopping.</Link>
       </div>
     );
