@@ -1,10 +1,9 @@
-import axios from 'axios'
 /**
  * ACTION TYPES
  */
 const ADD_TO_CART = 'ADD_TO_CART'
 const GET_CART = 'GET_CART'
-const POST_ITEM_TO_CART = 'POST_ITEM_TO_CART'
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 /**
  * INITIAL STATE
@@ -19,26 +18,16 @@ const initialState = {}
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
 export const postItemToCart = (product, quantity) => {};
+export const removeFromCart = productId => ({ type: REMOVE_FROM_CART, productId })
 
 /**
  * THUNK CREATORS
  */
 
-const fetchCart = () => {
-  return function(dispatch) {
-    axios.get('/api/cart')
-      .then( res => {
-        dispatch(getCart(res.data))
-      })
-      .catch(err => console.log(err));
-  }
-}
-
 
 /**
  * REDUCER
  */
-
 
 export default function (state = initialState, action) {
   let newState = {...state}
@@ -61,7 +50,12 @@ export default function (state = initialState, action) {
     case GET_CART:
       return action.cart
 
+    case REMOVE_FROM_CART:
+      delete newState[action.productId]
+      return newState
+
     default:
       return state
   }
 }
+
