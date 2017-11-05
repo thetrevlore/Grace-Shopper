@@ -1,47 +1,41 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React from 'react'
+import { addToCart } from '../store/cart'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class AddProduct extends Component {
+function AddProduct (props) {
+  let quantity
 
-  constructor(props) {
-    super(props)
+  const { inventoryAmount } = props.selectedProduct
+  return (
+    <div>
+      <form>
+        <select onChange={(e)=> quantity = +e.target.value} >
+          {
+            new Array(inventoryAmount+1).fill()
+              .map((_, index) => index)
+              .map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
+          }
+        </select>
+      </form>
+      <button onClick={() => { props.handleSubmit(props.selectedProduct, quantity) }}>
+        Add to cart
+      </button>
+    </div>
+  )
+}
 
-    this.state = {
-      quantity: 1
+const mapStateToProps = (state, ownProps) => ({
+  selectedProduct: ownProps.selectedProduct
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleSubmit(selectedProduct, quantity){
+      dispatch(addToCart(selectedProduct, quantity))
+      ownProps.history.push('/products')
     }
-
-    this.selectedProduct = this.props.selectedProduct
-    this.productId = this.selectedProduct.id
-    this.handleSelectChange = this.handleSelectChange.bind(this)
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   axios.post('/api/cart', nextProps.cart)
-  //     .catch(console.error)
-  // }
-
-  handleSelectChange(e) {
-    this.setState({quantity: +e.target.value})
-  }
-
-  render() {
-    const inventoryAmount = this.selectedProduct.inventoryAmount
-
-    return (
-      <div>
-        <form>
-          <select onChange={this.handleSelectChange} value={this.state.quantity}>
-            {
-              new Array(inventoryAmount+1).fill()
-                .map((_, index) => index)
-                .map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
-            }
-          </select>
-        </form>
-        <button onClick={() => { this.props.addToCart(this.selectedProduct, this.state.quantity) }}>
-          Add to cart
-        </button>
-      </div>
-    )
   }
 }
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddProduct));
