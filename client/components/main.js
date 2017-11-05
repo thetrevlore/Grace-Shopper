@@ -16,7 +16,7 @@ const Main = (props) => {
   return (
     <div>
       <h1>Funny Money</h1>
-      <nav>
+      <nav className = "navBar">
         {
           isLoggedIn
             ? <div>
