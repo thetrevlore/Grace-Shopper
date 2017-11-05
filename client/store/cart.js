@@ -24,10 +24,10 @@ export const removeFromCart = productId => ({ type: REMOVE_FROM_CART, productId 
  * THUNK CREATORS
  */
 
+
 /**
  * REDUCER
  */
-
 
 export default function (state = initialState, action) {
   let newState = {...state}
