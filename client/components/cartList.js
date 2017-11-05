@@ -25,7 +25,7 @@ const CartList = (props) => {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
-                <td><button onClick={props.delete}>&times;</button></td>
+                <td><button onClick={()=>props.delete(item.productId)}>&times;</button></td>
               </tr>
             )
           })
