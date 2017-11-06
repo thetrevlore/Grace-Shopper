@@ -15,7 +15,7 @@ const Main = (props) => {
   }
 
   const containerStyle = {
-    marginTop: "100px"
+    paddingTop: "130px",
   }
 
   return (

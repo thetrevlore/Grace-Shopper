@@ -11,7 +11,7 @@ function AddProduct (props) {
   return (
     <div>
       <form>
-        <select onChange={(e)=> { quantity = +e.target.value }} defaultValue="" >
+        <select onChange={(e)=> { quantity = +e.target.value }} >
           {
             new Array(selectedProduct.inventoryAmount + 1).fill(0)
               .map((_, index) => index)
