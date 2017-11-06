@@ -6,6 +6,8 @@ const CartList = (props) => {
   const cartItems = props.items;
   const total = cartItems.reduce((acc, cur) => acc+=cur.quantity * cur.price, 0)
 
+  console.log("CART ITEMS --- ", cartItems)
+  console.log("PRODUCTS ---", products)
   return (
     <div>
     <table>
@@ -26,6 +28,7 @@ const CartList = (props) => {
                 <td>{item.title}</td>
                 <td>{`$${+item.price * (+item.quantity)}.00`}</td>
                 <td>{item.quantity}</td>
+                
                 <td><button onClick={()=>{
                   props.delete(item, products.filter(product => +product.id === +item.productId)[0])
                 }
@@ -41,3 +44,5 @@ const CartList = (props) => {
 }
 
 export default CartList;
+
+
