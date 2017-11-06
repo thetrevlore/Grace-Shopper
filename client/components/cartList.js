@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateInventoryThunk, removeOneFromCart } from '../store';
+import { updateInventoryThunk, removeOneFromCart, addToCart } from '../store';
 
 const CartList = (props) => {
 
@@ -30,8 +30,8 @@ const CartList = (props) => {
               <tr key={idx}>
                 <td>{item.title}</td>
                 <td>{`$${+item.price * (+item.quantity)}.00`}</td>
-                <td><button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button> {item.quantity} <button onClick={props.incrementQuantity(item, targetedProduct)}>+</button></td>
-                <td><button onClick={()=>{props.delete(item, targetedProduct)}}>&times;</button></td>
+                <td><button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button> {item.quantity} <button onClick={()=>props.incrementQuantity(item, targetedProduct)}>+</button></td>
+                <td><button onClick={()=>{props.delete(item)}}>&times;</button></td>
               </tr>
             )
           })
@@ -42,37 +42,21 @@ const CartList = (props) => {
     </div>)
 }
 
-
-// const mapStateToProps = (state) => ({
-//   cartArray: Object.keys(state.cart).map(item => {
-//     state.cart[item].productId = +item
-//     return state.cart[item]
-//   }),
-//   user: state.user,
-//   products: state.products
-// });
+const mapState = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // need to make a 
-    // item???
-    // newQuantity???
-    // oldQuantity???
-    // ev.preventDefault() somewhere...
-    // YOU'RE ON MASTER RIGHT NOW. STOP!!!
-    decrementQuantity: (item, selectedProduct) => {
-        dispatch(removeOneFromCart(item.productId))
-        selectedProduct.inventoryAmount+=item.quantity
+    decrementQuantity(item, selectedProduct){
+        dispatch(removeOneFromCart(selectedProduct))
+        selectedProduct.inventoryAmount+=1
         dispatch(updateInventoryThunk(selectedProduct))
     },
-    incrementQuantity: (item, selectedProduct) => {
-        dispatch(addToCart(selectedProduct, quantity))
-        selectedProduct.inventoryAmount-=quantity
+    incrementQuantity(item, selectedProduct){
+        dispatch(addToCart(selectedProduct, 1))
+        selectedProduct.inventoryAmount-=1
         dispatch(updateInventoryThunk(selectedProduct))
-      }
-      
     }
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartList));
+export default withRouter(connect(mapState, mapDispatchToProps)(CartList));
