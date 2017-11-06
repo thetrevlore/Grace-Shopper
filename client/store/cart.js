@@ -18,7 +18,7 @@ const initialState = {}
 
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
-export const removeFromCart = productId => ({ type: REMOVE_FROM_CART, productId })
+export const removeFromCart = itemId => ({ type: REMOVE_FROM_CART, itemId })
 export const clearCart = () => ({ type: CLEAR_CART });
 
 /**
@@ -52,7 +52,7 @@ export default function (state = initialState, action) {
       return action.cart
 
     case REMOVE_FROM_CART:
-      delete newState[action.productId]
+      delete newState[action.itemId]
       return newState
 
     case CLEAR_CART:

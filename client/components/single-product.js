@@ -5,12 +5,10 @@ import AddProduct from './AddProduct'
 import { addToCart, postItemToCart, removeFromCart } from '../store';
 
 const SingleProduct = props => {
-  console.log('singleProduct props', props)
   const itemId = +props.match.params.id
   const { products } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
-  console.log('props', selectedProduct)
-
+git
   return (
     <div>
       <h1>{selectedProduct.title}</h1>

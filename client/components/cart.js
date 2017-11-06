@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store, { removeFromCart, postOrder, clearCart } from '../store/index';
+import { removeFromCart, postOrder, clearCart, updateInventoryThunk } from '../store';
 import CartList from './cartList';
 
 function Cart(props){
 
-    const { cartArray } = props
+    const { cartArray, products, handleSubmitOrder, removeFromCart } = props
     const order = {
       userId: props.user.id,
       email: props.user.email,
@@ -18,10 +18,10 @@ function Cart(props){
     return (
       <div>
         <h2>Your Cart</h2>
-        <CartList items={cartArray} delete={props.removeFromCart}/>
+        <CartList items={cartArray} delete={removeFromCart} products={products}/>
         <div>
         <h4>Enter shipping information:</h4>
-        <form className="addForm" onSubmit={(e)=>props.handleSubmitOrder(e, order)}>
+        <form className="addForm" onSubmit={(e)=> handleSubmitOrder(e, order)}>
           <input
             title=""
             type="text"
@@ -43,13 +43,16 @@ const mapStateToProps = (state) => ({
     state.cart[item].productId = +item
     return state.cart[item]
   }),
-  user: state.user
+  user: state.user,
+  products: state.products
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    removeFromCart: (product) => {
-      return dispatch(removeFromCart(product))
+    removeFromCart: (item, product) => {
+      dispatch(removeFromCart(item.productId))
+      product.inventoryAmount+=item.quantity
+      dispatch(updateInventoryThunk(product))
     },
     handleSubmitOrder (evt, order) {
       evt.preventDefault();

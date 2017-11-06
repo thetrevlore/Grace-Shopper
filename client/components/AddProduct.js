@@ -4,13 +4,14 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function AddProduct (props) {
-  let quantity = 0;
 
   const { inventoryAmount } = props.selectedProduct
+  const { value } = props
+  let quantity = 0;
   return (
     <div>
       <form>
-        <select onChange={(e)=> quantity = +e.target.value} >
+        <select onChange={(e)=> quantity = +e.target.value} value={value}>
           {
             new Array(inventoryAmount + 1).fill(0)
               .map((_, index) => index)

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import store from '../store/index';
+import React from 'react';
 
 const CartList = (props) => {
   const cartItems = props.items;
+  const { products } = props
+
   return (
     <div>
     <table>
@@ -25,7 +24,10 @@ const CartList = (props) => {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
-                <td><button onClick={()=>props.delete(item.productId)}>&times;</button></td>
+                <td><button onClick={()=>{
+                  props.delete(item, products.filter(product => +product.id === +item.productId)[0])
+                }
+                }>&times;</button></td>
               </tr>
             )
           })
