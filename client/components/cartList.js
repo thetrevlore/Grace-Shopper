@@ -3,7 +3,7 @@ import React from 'react';
 const CartList = (props) => {
   const cartItems = props.items;
   const { products } = props
-  console.log('cartItems in cartList', cartItems)
+
   return (
     <div>
     <table>
