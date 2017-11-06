@@ -30,7 +30,17 @@ const CartList = (props) => {
               <tr key={idx}>
                 <td>{item.title}</td>
                 <td>{`$${+item.price * (+item.quantity)}.00`}</td>
-                <td><button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button> {item.quantity} <button onClick={()=>props.incrementQuantity(item, targetedProduct)}>+</button></td>
+                <td>
+                  { item.quantity > 1 &&
+                    <button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button>
+                  }
+                  {`${item.quantity}`}
+                  {
+                    targetedProduct.inventoryAmount >= 0 &&
+                    <button onClick={()=>props.incrementQuantity(item, targetedProduct)}>+</button>
+                  }
+                </td>
+                
                 <td><button onClick={()=>{props.delete(item)}}>&times;</button></td>
               </tr>
             )
