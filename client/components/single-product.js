@@ -8,7 +8,6 @@ const SingleProduct = props => {
   const itemId = +props.match.params.id
   const { products } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
-git
   return (
     <div>
       <h1>{selectedProduct.title}</h1>
