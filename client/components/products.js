@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddProduct from './AddProduct'
-import store, { addToCart, postItemToCart, removeFromCart } from '../store/index';
+import { addToCart, postItemToCart, removeFromCart } from '../store';
 
 function Products (props) {
   const { products, addToCart, cart } = props;
@@ -26,8 +26,8 @@ function Products (props) {
                 </NavLink>
                 <AddProduct
                   selectedProduct={product}
-                  addToCart={props.addToCart}
-                  cart = {props.cart}
+                  addToCart={addToCart}
+                  cart ={cart}
                 />
               </div>
             )

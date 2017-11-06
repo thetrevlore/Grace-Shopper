@@ -5,6 +5,8 @@ import store from '../store/index';
 
 const CartList = (props) => {
   const cartItems = props.items;
+  const { products } = props
+  console.log('cartItems in cartList', cartItems)
   return (
     <div>
     <table>
@@ -25,7 +27,10 @@ const CartList = (props) => {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
-                <td><button onClick={()=>props.delete(item.productId)}>&times;</button></td>
+                <td><button onClick={()=>{
+                  props.delete(item, products.filter(product => +product.id === +item.productId)[0])
+                }
+                }>&times;</button></td>
               </tr>
             )
           })
