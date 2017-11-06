@@ -49,7 +49,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     removeFromCart: (item, product) => {
-      console.log('product!!', product,)
       dispatch(removeFromCart(item.productId))
       product.inventoryAmount+=item.quantity
       dispatch(updateInventoryThunk(product))
