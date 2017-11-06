@@ -22,7 +22,7 @@ export class UserHome extends Component {
   render () {
     const {email} = this.props
     console.log('state= ', this.state)
-    console.log('props', this.props)
+    console.log('props_ORDERSSSSS', this.props.orders)
   return (
     <div>
       {email
@@ -30,8 +30,9 @@ export class UserHome extends Component {
           <h3> {`Welcome, ${email}`} </h3>
           <div>
             <h4>Order History</h4>
-            {/*MAP HERE AND CALL EACH OBJ OUTPUT "ORDER"*/}
+
             <div>
+
               <h5>Order ID</h5>
               <table>
                 <thead>
@@ -43,16 +44,24 @@ export class UserHome extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {orderItems && orderItems.map((item, idx) => {
-                    return (
-                      <tr key={idx}>
-                        <td>{item.title}</td>
-                        <td>{item.price}</td>
-                        <td>{item.quantity}</td>
-                        <td>{`$${total}.00`}</td>
-                      </tr>
-                    )
-                  })} */}
+                   {this.props.orders && this.props.orders.map((ordersArr, idx) => {
+
+
+
+
+                      return ordersArr.orderItems.map((item, idx)=> {
+                        return (
+                          <tr key={idx}>
+                            <td>{item.title}</td>
+                            <td>{item.price}</td>
+                            <td>{item.quantity}</td>
+                            <td>${item.price * item.quantity}</td>
+                          </tr>
+                        )
+                      })
+
+
+                  })}
                 </tbody>
               </table>
             </div>
