@@ -4,7 +4,6 @@ const CartList = (props) => {
 
   const { products } = props
   const cartItems = props.items;
-  console.log(cartItems)
   const total = cartItems.reduce((acc, cur) => acc+=cur.quantity * cur.price, 0)
 
   return (
