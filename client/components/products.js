@@ -5,8 +5,8 @@ import AddProduct from './AddProduct'
 import { addToCart, postItemToCart } from '../store';
 
 function Products (props) {
-  const { products, addToCart, cart } = props;
-  let value
+  const { products, addToCart, cart, value } = props;
+
   return (
     <div>
       <h1>Products</h1>
@@ -24,10 +24,9 @@ function Products (props) {
                     <span>{`     $${product.price}`}</span></h5>
                   </div>
                 </NavLink>
-                <AddProduct value={value}
+                <AddProduct
                   selectedProduct={product}
-                  addToCart={addToCart}
-                  cart ={cart}
+                  currentQuantityInCart={ cart[product.id] && cart[product.id].quantity || 0 }
                 />
               </div>
             )
@@ -45,13 +44,7 @@ const mapStateToProps = function (state) {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (product, quantity) => {
-      dispatch(addToCart(product, quantity))
-      value = null
-    }
-  }
-}
+const mapDispatchToProps = (dispatch, ownProps) => ({})
+
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Products));

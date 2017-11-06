@@ -5,29 +5,32 @@ import { connect } from 'react-redux';
 
 function AddProduct (props) {
 
-  const { inventoryAmount } = props.selectedProduct
-  const { value } = props
+  let { currentQuantityInCart, selectedProduct, value } = props
   let quantity = 0;
+
   return (
     <div>
       <form>
-        <select onChange={(e)=> quantity = +e.target.value} value={value}>
+        <select onChange={(e)=> { quantity = +e.target.value }} >
           {
-            new Array(inventoryAmount + 1).fill(0)
+            new Array(selectedProduct.inventoryAmount + 1).fill(0)
               .map((_, index) => index)
               .map((amt) => <option key={amt} value={amt}>{amt}</option>)
           }
         </select>
       </form>
-      <button onClick={() => { props.handleSubmit(props.selectedProduct, quantity) }}>
+      <button onClick={() => { props.handleSubmit(selectedProduct, quantity) }}>
         Add to cart
       </button>
+      <h5>{`${selectedProduct.title}s in cart: ${currentQuantityInCart}`}</h5>
     </div>
   )
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  selectedProduct: ownProps.selectedProduct
+  selectedProduct: ownProps.selectedProduct,
+  cart: state.cart,
+  value: ""
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

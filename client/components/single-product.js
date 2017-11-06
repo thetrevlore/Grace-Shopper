@@ -5,10 +5,11 @@ import AddProduct from './AddProduct'
 import { addToCart, postItemToCart, removeFromCart } from '../store';
 
 const SingleProduct = props => {
+
   const itemId = +props.match.params.id
-  const { products } = props;
+  const { products, cart, addToCart } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
-git
+
   return (
     <div>
       <h1>{selectedProduct.title}</h1>
@@ -27,9 +28,8 @@ git
       </div>
       <AddProduct
         selectedProduct={selectedProduct}
-        addToCart={props.addToCart}
-        cart={props.cart}
-        postItemToCart={props.postItemToCart}
+        addToCart={addToCart}
+        currentQuantityInCart={ cart[selectedProduct.id] && cart[selectedProduct.id].quantity || 0 }
       />
     </div>
   )
@@ -39,16 +39,7 @@ const mapStateToProps = (state) => ({
   products: state.products,
   cart:state.cart })
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (product, quantity) => {
-      return dispatch(addToCart(product, quantity))
-    },
-    removeFromCart: (product) => {
-      return dispatch(removeFromCart(product))
-    }
-  }
-}
+const mapDispatchToProps = (dispatch) => ({})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
 
