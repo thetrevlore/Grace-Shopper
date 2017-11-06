@@ -5,6 +5,7 @@ import AddProduct from './AddProduct'
 import { addToCart, postItemToCart, removeFromCart } from '../store';
 
 const SingleProduct = props => {
+  let value
   const itemId = +props.match.params.id
   const { products } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
@@ -27,8 +28,6 @@ const SingleProduct = props => {
       <AddProduct
         selectedProduct={selectedProduct}
         addToCart={props.addToCart}
-        cart={props.cart}
-        postItemToCart={props.postItemToCart}
       />
     </div>
   )

@@ -16,7 +16,7 @@ const initialState = {}
  * ACTION CREATORS
  */
 
-export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
+export const addToCart = (product, quantity) => {({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
 export const removeFromCart = itemId => ({ type: REMOVE_FROM_CART, itemId })
 export const clearCart = () => ({ type: CLEAR_CART });

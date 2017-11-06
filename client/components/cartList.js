@@ -24,7 +24,7 @@ const CartList = (props) => {
              return (
               <tr key={idx}>
                 <td>{item.title}</td>
-                <td>{+item.price * (+item.quantity)}</td>
+                <td>{`$${+item.price * (+item.quantity)}.00`}</td>
                 <td>{item.quantity}</td>
                 <td><button onClick={()=>{
                   props.delete(item, products.filter(product => +product.id === +item.productId)[0])
@@ -36,7 +36,7 @@ const CartList = (props) => {
         }
       </tbody>
     </table>
-      <h3>{`TOTAL: $${total}`}</h3>
+      <h3>{`TOTAL: $${total}.00`}</h3>
     </div>)
 }
 
