@@ -16,7 +16,6 @@ class Routes extends Component {
     this.state = store.getState();
   }
 
-
   componentWillMount() {
     const productsThunk = fetchProducts();
     const userThunk = me();
