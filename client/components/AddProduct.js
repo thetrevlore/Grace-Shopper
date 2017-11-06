@@ -18,7 +18,7 @@ function AddProduct (props) {
           }
         </select>
       </form>
-      <button onClick={() => { props.handleSubmit(props.selectedProduct, quantity) }}>
+      <button onClick={() => { props.handleSubmit(pgit rops.selectedProduct, quantity) }}>
         Add to cart
       </button>
     </div>
