@@ -34,7 +34,7 @@ const CartList = (props) => {
                   { item.quantity > 1 &&
                     <button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button>
                   }
-                  {`${item.quantity}`}
+                  {` ${item.quantity} `}
                   {
                     targetedProduct.inventoryAmount >= 0 &&
                     <button onClick={()=>props.incrementQuantity(item, targetedProduct)}>+</button>
