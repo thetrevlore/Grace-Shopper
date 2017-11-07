@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Login} from './auth-form'
+import {Link} from 'react-router-dom';
 import store, {fetchUserOrders} from '../store'
 
 /**
@@ -21,8 +22,7 @@ export class UserHome extends Component {
 
   render () {
     const {email} = this.props
-    console.log('state= ', this.state)
-    console.log('props_ORDERSSSSS', this.props.orders)
+    const {orders} = this.props
   return (
     <div>
       {email
@@ -34,19 +34,24 @@ export class UserHome extends Component {
                 <thead>
                   <tr>
                     <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
+                    <th>Order Date</th>
+                    <th>View Order</th>
                   </tr>
                 </thead>
                 <tbody>
-                   {this.props.orders && this.props.orders.map((order, idx) => {
+                   {orders && orders.map((order, idx) => {
                       return (
-                        <tr key={order.id}>
-                          <td>{order.id}</td>
-                          <td>{order.createdAt.slice(0,10)}</td>
-                          <td>$100 hardcoded</td>
-                        </tr>
-                      )
+                          <tr key={order.id}>
+                            <td>{order.id}</td>
+                            <td>{order.createdAt.slice(0,10)}</td>
+                            <td><Link to = {`home/orders/${order.id}`}>
+                              {<img src='https://cdn3.iconfinder.com/data/icons/touch-gesture-outline/512/double_click_touch_click_finger_hand_select_gesture-512.png'
+                              height = '30px'
+                              width = '30px'/>}
+                              </Link>
+                            </td>
+                          </tr>
+                        )
                     })
                   }
                 </tbody>

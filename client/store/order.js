@@ -7,6 +7,7 @@ const initialState = []
 
 const ADD_ORDER = 'ADD_ORDER';
 const GET_USER_ORDERS = 'GET_USER_ORDERS'
+const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 
 /**
  * ACTION CREATORS
@@ -14,6 +15,7 @@ const GET_USER_ORDERS = 'GET_USER_ORDERS'
 
 const addOrder = order => ({ action: ADD_ORDER, order })
 const getUserOrders = orders => ({type: GET_USER_ORDERS, orders})
+const getSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
 
 /**
  * THUNK CREATORS
@@ -41,6 +43,17 @@ export const fetchUserOrders = (userId) => {
   }
 }
 
+export const fetchOrder = (orderId) => {
+  return function fetchOrderThunk (dispatch) {
+    axios.get(`/api/orders/${orderId}`)
+    .then( res => res.data)
+    .then((order) => {
+      dispatch(getSingleOrder(order))
+    })
+  .catch(err => console.log(err));
+  }
+}
+
 /**
  * REDUCER
  */
@@ -51,6 +64,8 @@ export default function (state = initialState, action) {
       return [...state, action.order];
     case GET_USER_ORDERS:
       return action.orders;
+    case GET_SINGLE_ORDER:
+      return action.order;
     default:
       return state
   }
