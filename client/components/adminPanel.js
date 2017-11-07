@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchAllUsers} from '../store';
+import {fetchAllUsers, fetchAllOrders, fetchAllProducts} from '../store';
 
 class AdminPanel extends Component {
   constructor(props){
@@ -31,7 +31,9 @@ const mapState = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getData(){
-      dispatch(fetchAllUsers())
+      dispatch(fetchAllUsers());
+      dispatch(fetchAllProducts());
+      dispatch(fetchAllOrders());
     }
   }
 }
