@@ -10,7 +10,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:orderId', (req, res, next) => {
   Order.findOne(
-    { where: {
+    { include: [{model: OrderItem}],
+      where: {
       id: Number(req.params.orderId)
     }}
   )
