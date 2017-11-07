@@ -43,8 +43,9 @@ export const postOrder = (order, history) =>
 export const removeItemFromOrder = (itemProductId, orderId, updatedInventoryAmount) =>
   dispatch => {
   axios.delete(`/api/order-items/${orderId}/${itemProductId}`)
-    .then(()=>{
-      dispatch(removeFromCart(itemProductId))
+    .then((result)=>{
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',result)
+      dispatch(removeFromCart(itemProductId));
       const updateInventoryThunk = updateInventory(itemProductId, updatedInventoryAmount);
       dispatch(updateInventoryThunk)
     })

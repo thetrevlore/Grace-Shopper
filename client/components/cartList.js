@@ -27,7 +27,7 @@ const CartList = (props) => {
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
                 <td><button onClick={()=>{
-                  console.log('PRODUCT!', cartItems)
+                  console.log('PRODUCT!', products.filter(product => +product.id === +item.productId)[0].inventoryAmount + item.quantity)
                   props.delete(item.productId, orderId, products.filter(product => +product.id === +item.productId)[0].inventoryAmount + item.quantity)
                 }
                 }>&times;</button></td>

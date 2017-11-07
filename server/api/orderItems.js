@@ -13,7 +13,7 @@ router.delete('/:orderId/:productId', (req, res, next) => {
       foundItem.destroy()
     })
     .then(() => {
-      res.status(204);
+      res.sendStatus(204);
     })
     .catch(console.error);
 });

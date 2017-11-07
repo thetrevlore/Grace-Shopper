@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeFromCart, postOrder, clearCart, removeItemFromOrder } from '../store';
+import { postOrder, clearCart, removeItemFromOrder } from '../store';
 import CartList from './cartList';
 
 function Cart(props){

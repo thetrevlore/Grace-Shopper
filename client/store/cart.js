@@ -21,9 +21,7 @@ const initialState = {}
 
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
-export const removeFromCart = itemProductId => {
-  return ({ type: REMOVE_FROM_CART, itemProductId })
-}
+export const removeFromCart = itemProductId => ({ type: REMOVE_FROM_CART, itemProductId });
 export const clearCart = () => ({ type: CLEAR_CART });
 
 /**
