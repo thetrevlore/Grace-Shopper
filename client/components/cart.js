@@ -41,7 +41,6 @@ function Cart(props){
 const mapStateToProps = (state) => ({
   cartArray: Object.keys(state.cart).map(item => {
     state.cart[item].productId = +item
-    // state.cart[item].inventoryAmount = state.products[+item].inventoryAmount
     return state.cart[item]
   }),
   user: state.user,
