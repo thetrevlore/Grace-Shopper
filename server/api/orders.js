@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:userId', (req, res, next) => {
-  Order.findOne(
+  return Order.findOne(
     { where: {
       userId: Number(req.params.userId),
       status: "Created"
@@ -41,10 +41,8 @@ router.post('/:userId', (req, res, next) => {
       status: "Created"
     }
   })
-    .spread((order, created)=>{
-    console.log('orderarray', created);
+    .spread((order)=>{
     const { orderItem } = req.body;
-    console.log("orderItem:", orderItem)
     OrderItem.findOrCreate({
       where: {
         title: orderItem.title,
@@ -53,7 +51,9 @@ router.post('/:userId', (req, res, next) => {
         price: orderItem.price
       }
     })
-      .then(item=> item[0].update({quantity: +req.body.quantity}))
+      .then(item=> {
+        item[0].update({quantity: +req.body.quantity})
+      })
       .then((updatedItem) => res.status(204).json(updatedItem))
   })
     .catch(next)

@@ -26,14 +26,16 @@ router.get('/:productId', (req, res, next) => {
 });
 
 router.put('/:productId', (req, res, next) => {
-  console.log('REQBOD', req.body)
   Product.find({
     where: {
       id: +req.params.productId
     }
   })
   .then(product => product.update(req.body))
-  .then(() => res.status(204))
+  .then((result) =>{
+    console.log('RESSSS',result)
+    return res.json(result)
+  })
   .catch(next)
 });
 

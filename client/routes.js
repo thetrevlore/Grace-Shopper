@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, Products, SingleProduct, Cart, Welcome, NotFound, OrderConfirmation} from './components'
-import store, {me, fetchProducts, fetchCartOrder} from './store'
+import store, {me, fetchProducts, fetchCartOrder, fetchOrderId} from './store'
 
 /**
  * COMPONENT
@@ -29,8 +29,11 @@ class Routes extends Component {
     console.log('userID from routes', store.getState().user.id);
     const userId = store.getState().user.id
     if(userId) {
-      const getCartThunk = fetchCartOrder(store.getState().user.id);
+      const getCartThunk = fetchCartOrder(userId);
       store.dispatch(getCartThunk)
+      console.log('UUSSSEERRIIDDDD',userId)
+      const fetchOrderIdThunk = fetchOrderId(userId)
+      store.dispatch(fetchOrderIdThunk)
     }
   }
 

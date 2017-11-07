@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 function AddProduct (props) {
 
   const { selectedProduct, handleSubmit, user } = props
-  console.log('user!!!', user)
   const { inventoryAmount } = selectedProduct;
   var quantity = 0;
   const orderToPost = {
@@ -31,7 +30,7 @@ function AddProduct (props) {
           }
         </select>
       </form>
-      <button onClick={() => { handleSubmit(selectedProduct, quantity, orderToPost, user.id) }}>
+      <button onClick={() => { handleSubmit(selectedProduct, quantity, orderToPost, user.id, selectedProduct.id, selectedProduct.inventoryAmount - quantity) }}>
         Add to cart
       </button>
     </div>
@@ -46,14 +45,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleSubmit(selectedProduct, quantity, orderToSave, userId){
-      const addToCartThunk = addToCart(selectedProduct, quantity)
-      dispatch(addToCartThunk);
-      const postToCartThunk = postToCart(orderToSave, userId, quantity)
+    handleSubmit(selectedProduct, quantity, orderToSave, userId, selectedProductId, inventoryAmount){
+      const postToCartThunk = postToCart(orderToSave, userId, quantity, selectedProduct);
       dispatch(postToCartThunk);
-      selectedProduct.inventoryAmount-=quantity;
-      console.log('UPDATEINVENTORYAMOUNT',selectedProduct.inventoryAmount)
-      const updateInventoryThunk = updateInventory(selectedProduct.id, selectedProduct.inventoryAmount)
+      console.log('UPDATEINVENTORYAMOUNT',inventoryAmount)
+      const updateInventoryThunk = updateInventory(selectedProductId, inventoryAmount)
       dispatch(updateInventoryThunk);
       ownProps.history.push('/products');
     }

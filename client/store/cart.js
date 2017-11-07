@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {addOrderId} from './order'
+import {fetchOrderId} from './index'
 
 /**
  * ACTION TYPES
@@ -21,19 +21,26 @@ const initialState = {}
 
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
-export const removeFromCart = itemProductId => ({ type: REMOVE_FROM_CART, itemProductId })
+export const removeFromCart = itemProductId => {
+  return ({ type: REMOVE_FROM_CART, itemProductId })
+}
 export const clearCart = () => ({ type: CLEAR_CART });
 
 /**
  * THUNK CREATORS
  */
 
-export const postToCart = (itemToPost, userId, quantity) =>
+export const postToCart = (itemToPost, userId, quantity, product) =>
 
   function postOrderToCartThunk (dispatch, getState){
     itemToPost.quantity = quantity;
     axios.post(`/api/orders/${userId}`, itemToPost)
-      .then(res=>res.data)
+      .then(res=> {
+        dispatch(addToCart(product, quantity));
+        const order = JSON.parse(res.config.data)
+        dispatch(fetchOrderId(order.userId))
+        return res.data
+      })
       .catch(console.error)
   };
 
@@ -50,11 +57,9 @@ export const fetchCartOrder = (userId) =>
     axios.get(`/api/orders/${userId}`)
       .then( res => res.data)
       .then( fetchedOrder => {
-        console.log('!!!!!',fetchedOrder)
         const cart = {};
         fetchedOrder.orderItems.map(item =>{
-          console.log()
-          cart[+item.id]=item
+          cart[+item.productId]=item
         })
         dispatch(getCart(cart))
         dispatch(addOrderId(fetchedOrder.id))
@@ -88,7 +93,7 @@ export default function (state = initialState, action) {
       return action.cart
 
     case REMOVE_FROM_CART:
-      delete newState[action.itemId]
+      delete newState[action.itemProductId]
       return newState
 
     case CLEAR_CART:

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {removeFromCart, updateInventory} from './index'
 
-const initialState = 0
+const initialState = NaN
 /**
  * ACTION TYPES
  */
@@ -13,11 +13,21 @@ const ADD_ORDER_ID = 'ADD_ORDER_ID';
  * ACTION CREATORS
  */
 
-export const addOrderId = orderId => ({ type: ADD_ORDER_ID, orderId });
+export const addOrderId = order => ({ type: ADD_ORDER_ID, order });
 
 /**
  * THUNK CREATORS
  */
+
+export const fetchOrderId = userId =>
+  dispatch =>
+    axios.get(`/api/orders/${userId}`)
+      .then(res =>{
+        if(res.data){
+          dispatch(addOrderId(res.data.id))
+        }
+      })
+      .catch(console.error)
 
 export const postOrder = (order, history) =>
 
@@ -33,21 +43,24 @@ export const postOrder = (order, history) =>
 export const removeItemFromOrder = (itemProductId, orderId, updatedInventoryAmount) =>
   dispatch => {
   axios.delete(`/api/order-items/${orderId}/${itemProductId}`)
-    .catch(console.error)
-    dispatch(removeFromCart(itemProductId))
-    console.log('!!!!!!!!!!!!!!!!!!')
-    const updateInventoryThunk = updateInventory(itemProductId, updatedInventoryAmount);
-    dispatch(updateInventoryThunk)
-  }
+    .then(()=>{
+      dispatch(removeFromCart(itemProductId))
+      const updateInventoryThunk = updateInventory(itemProductId, updatedInventoryAmount);
+      dispatch(updateInventoryThunk)
+    })
+    .catch(console.error);
+
+  };
 
 /**
  * REDUCER
  */
 
 export default function (state = initialState, action) {
+  let newState = state;
   switch (action.type) {
     case ADD_ORDER_ID:
-      return action.orderId;
+      return action.order;
     default:
       return state
   }
