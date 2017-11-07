@@ -10,10 +10,11 @@ function Products (props) {
   return (
     <div>
       <h1>Products</h1>
+      <div className="all-products-container">
       {
         products.map(product => {
             return (
-              <div key={product.id}>
+              <div key={product.id} className="single-product-container">
                 <div>
                   <h3><span>{product.title}</span></h3>
                 </div>
@@ -21,7 +22,7 @@ function Products (props) {
                   <img src={product.photos[0]} width="200" height="200" />
                   <div>
                     <h5><span>{product.description}</span>
-                    <span>{`     $${product.price}`}</span></h5>
+                    <span>{`$${product.price}`}</span></h5>
                   </div>
                 </NavLink>
                 <AddProduct
@@ -33,6 +34,7 @@ function Products (props) {
           }
         )
       }
+      </div>
     </div>
   )
 }
