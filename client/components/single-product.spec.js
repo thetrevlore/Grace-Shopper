@@ -5,19 +5,20 @@ import {expect} from 'chai'
 import React from 'react'
 import enzyme, {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import {SingleProduct} from './single-product'
+import SingleProduct from './single-product'
+import AddProduct from './AddProduct'
 
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('UserHome', () => {
-  let userHome
+describe('SingleProduct', () => {
+  let singleProd
 
   beforeEach(() => {
-    userHome = shallow(<UserHome email={'cody@email.com'} />)
+    singleProd = shallow(<SingleProduct />)
   })
 
-  it('renders the email in an h3', () => {
-    expect(userHome.find('h3').text()).to.be.equal('Welcome, cody@email.com')
+  it('renders single AddProduct component', () => {
+    expect(singleProd.find('h1')).to.have.length(1);
   })
 })

@@ -53,7 +53,6 @@ const createApp = () => {
 
   // session logging middleware
   app.use((req, res, next) => {
-    console.log('session object:', req.session);
     next();
   })
 

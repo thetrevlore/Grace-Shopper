@@ -16,7 +16,8 @@ describe('Order model', () => {
       let builtOrder;
       let purchase = {
         productId: 1,
-        quantity: 1
+        quantity: 1,
+        title: 'testOrderItem'
       };
 
       let orderRequest = {
@@ -29,14 +30,17 @@ describe('Order model', () => {
         .then( order => {
           builtOrder = order;
           purchase.orderId = order.id
+        })
+        .then(_ => {
           OrderItem.create(purchase)
-            .then( orderItem =>{
+          .then(orderItem => {
               item = orderItem
-            })
+          })
         }).catch(console.error)
       });
 
       it('returns correct productId', (done) => {
+        console.log(item)
         expect(item.productId.to.be.equal(1))
         done()
       });
