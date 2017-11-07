@@ -2,8 +2,8 @@ import React from 'react';
 
 const CartList = (props) => {
   const cartItems = props.items;
-  const { products, orderId } = props
-  console.log('ORDERID',orderId)
+  const { products, orderId } = props;
+  const total = cartItems.reduce((acc, cur) => acc+=cur.quantity * cur.price, 0)
 
 
   return (
@@ -24,7 +24,7 @@ const CartList = (props) => {
              return (
               <tr key={idx}>
                 <td>{item.title}</td>
-                <td>{item.price}</td>
+                <td>{`$${+item.price * (+item.quantity)}.00`}</td>
                 <td>{item.quantity}</td>
                 <td><button onClick={()=>{
                   console.log('PRODUCT!', products.filter(product => +product.id === +item.productId)[0].inventoryAmount + item.quantity)
@@ -37,6 +37,7 @@ const CartList = (props) => {
         }
       </tbody>
     </table>
+      <h3>{`TOTAL: $${total}.00`}</h3>
     </div>)
 }
 

@@ -5,6 +5,7 @@ import AddProduct from './AddProduct'
 import { addToCart } from '../store';
 
 function Products (props) {
+
   const { products, addToCart, cart } = props;
 
   return (
@@ -26,8 +27,7 @@ function Products (props) {
                 </NavLink>
                 <AddProduct
                   selectedProduct={product}
-                  addToCart={addToCart}
-                  cart ={cart}
+                  currentQuantityInCart={ cart[product.id] && cart[product.id].quantity || 0 }
                 />
               </div>
             )
