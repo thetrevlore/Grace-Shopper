@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchAllUsers, fetchAllOrders, fetchAllProducts} from '../store';
+import {fetchAllUsers, fetchAllOrders, fetchAllProducts, makeAdmin} from '../store';
+import AdminProducts from './adminProducts';
+import AdminUsers from './adminUsers';
 
 class AdminPanel extends Component {
   constructor(props){
@@ -9,15 +11,18 @@ class AdminPanel extends Component {
 
   componentWillMount() {
     this.props.getData();
-    console.log(this.props);
   }
 
   render () {
+    console.log("MY PROPSSSSSS", this.props)
     const {users, orders, products} = this.props.data;
     return (
       <div>
-        <h3>Hello</h3>
-        </div>
+        <h3>Products</h3>
+        <AdminProducts items={products} />
+        <h3>Users</h3>
+        <AdminUsers users={users} promote={this.props.promoteUser} />
+      </div>
     )
   }
 }
@@ -34,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchAllUsers());
       dispatch(fetchAllProducts());
       dispatch(fetchAllOrders());
+    },
+    promoteUser(id) {
+      dispatch(makeAdmin(id));
     }
   }
 }

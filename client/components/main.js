@@ -29,7 +29,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
-              {isAdmin && <Link to="/home">Admin Panel</Link>}
+              {isAdmin && <Link to="/admin">Admin Panel</Link>}
               <a href="#" onClick={handleClick}>Logout</a>
             </div>
             : <div>
@@ -56,7 +56,8 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 };
 
