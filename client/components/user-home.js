@@ -28,44 +28,30 @@ export class UserHome extends Component {
       {email
       ? <div>
           <h3> {`Welcome, ${email}`} </h3>
-          <div>
             <h4>Order History</h4>
-
             <div>
-
-              <h5>Order ID</h5>
               <table>
                 <thead>
                   <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>Order ID</th>
+                    <th>Date</th>
                     <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
-                   {this.props.orders && this.props.orders.map((ordersArr, idx) => {
-
-
-
-
-                      return ordersArr.orderItems.map((item, idx)=> {
-                        return (
-                          <tr key={idx}>
-                            <td>{item.title}</td>
-                            <td>{item.price}</td>
-                            <td>{item.quantity}</td>
-                            <td>${item.price * item.quantity}</td>
-                          </tr>
-                        )
-                      })
-
-
-                  })}
+                   {this.props.orders && this.props.orders.map((order, idx) => {
+                      return (
+                        <tr key={order.id}>
+                          <td>{order.id}</td>
+                          <td>{order.createdAt.slice(0,10)}</td>
+                          <td>$100 hardcoded</td>
+                        </tr>
+                      )
+                    })
+                  }
                 </tbody>
               </table>
             </div>
-          </div>
         </div>
       : <div>
         <h3>Please log in to view your account</h3>
@@ -73,10 +59,9 @@ export class UserHome extends Component {
       </div>
     }
     </div>
-  )
+  )}
 }
 
-}
 /**
  * CONTAINER
  */
