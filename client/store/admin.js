@@ -24,45 +24,42 @@ const adminData = {
 
 const getAllUsers = (users) => ({type: GET_ALL_USERS, users});
 const promoteUser = (user) => ({type: PROMOTE_USER, user});
-const deleteUser = (user) => (type: DELETE_USER, user);
+const deleteUser = (user) => ({type: DELETE_USER, user});
 
 /**
  * THUNK CREATORS
  */
 export const fetchAllUsers = () =>
   dispatch =>
-    axios.get('/users/')
-      .then(res =>
-        dispatch(getAllUsers(res.data)))
+    axios.get('/api/users')
+      .then(res => {
+        dispatch(getAllUsers(res.data));
+      })
       .catch(err => console.log(err))
 
 export const makeAdmin = (id) =>
   dispatch =>
-    axios.put(`/users/${id}`, {isAdmin: true})
+    axios.put(`api/users/${id}`, {isAdmin: true})
       .then(res => dispatch(promoteUser(res.data)))
       .catch(err => console.log(err))
 
 export const removeUser = (id) =>
   dispatch =>
-    axios.delete(`/users/${id}`)
+    axios.delete(`api/users/${id}`)
       .then(res => dispatch(deleteUser(res.data)))
       .catch(err => console.log(err))
 /**
  * REDUCER
  */
 export default function (state = adminData, action) {
-  const newState = {...state};
 
   switch (action.type) {
     case GET_ALL_USERS:
-      newState.users = action.users;
-      return newState;
+      return Object.assign({}, state, {users: action.users});
     case PROMOTE_USER:
-      newState.users = newState.users.filter(user => user.id !== action.user.id).concat(action.user);
-      return newState;
+      return Object.assign({}, state, {users: state.users.filter(user => user.id !== action.user.id).concat(action.user)});
     case DELETE_USER:
-      newState.users = newState.users.filter(user => user.id !== action.user.id);
-      return newState;
+      return Object.assign({}, state, {users: state.users.filter(user => user.id !== action.user.id)});
     default:
       return state
   }

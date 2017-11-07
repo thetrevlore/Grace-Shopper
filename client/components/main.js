@@ -5,7 +5,7 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+  const {children, handleClick, isLoggedIn, isAdmin} = props
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
@@ -29,6 +29,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
+              {isAdmin && <Link to="/home">Admin Panel</Link>}
               <a href="#" onClick={handleClick}>Logout</a>
             </div>
             : <div>
@@ -37,6 +38,9 @@ const Main = (props) => {
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
             </div>
+        }
+        {
+    
         }
       </nav>
       <hr />
