@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
+import {saveCart} from "../store/cart";
 
 /**
  * COMPONENT
@@ -11,7 +12,14 @@ import {logout} from '../store'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+  const {children, handleClick, isLoggedIn, user, cartArray, orderId} = props;
+  console.log("order", props.order)
+  const orderToSave = {
+    userId: user.id,
+    email: user.email,
+    orderItems: cartArray,
+    status: 'Created'
+  };
 
   return (
     <div>
@@ -24,7 +32,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
+              <a href="#" onClick={()=>handleClick(orderToSave, orderId)}>Logout</a>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -45,13 +53,17 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user,
+    orderId: state.orderId
   }
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick () {
+    handleClick (orderToSave, orderId) {
+      const saveCartThunk = saveCart(orderToSave, orderId);
+      dispatch(saveCartThunk);
       dispatch(logout())
     }
   }

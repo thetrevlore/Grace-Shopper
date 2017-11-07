@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeFromCart, postOrder, clearCart, updateInventoryThunk } from '../store';
+import { removeFromCart, postOrder, clearCart, updateInventory } from '../store';
 import CartList from './cartList';
 
 function Cart(props){
@@ -11,8 +11,7 @@ function Cart(props){
       userId: props.user.id,
       email: props.user.email,
       orderItems: props.cartArray,
-      status: 'Completed',
-      hasBeenPlaced: true
+      status: 'Completed'
     }
 
     return (
@@ -50,14 +49,16 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     removeFromCart: (item, product) => {
-      dispatch(removeFromCart(item.productId))
-      product.inventoryAmount+=item.quantity
-      dispatch(updateInventoryThunk(product))
+      dispatch(removeFromCart(item.productId));
+      product.inventoryAmount+=item.quantity;
+      const updateInventoryThunk = updateInventory(product);
+      dispatch(updateInventoryThunk)
     },
     handleSubmitOrder (evt, order) {
       evt.preventDefault();
-      order.shippingAddress = evt.target.address.value
-      dispatch(postOrder(order, ownProps.history));
+      order.shippingAddress = evt.target.address.value;
+      const postOrderThunk = postOrder(order, ownProps.history);
+      dispatch(postOrderThunk);
       dispatch(clearCart());
     },
   }

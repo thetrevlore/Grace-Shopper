@@ -1,10 +1,13 @@
+import axios from 'axios'
+
+
 /**
  * ACTION TYPES
  */
-const ADD_TO_CART = 'ADD_TO_CART'
-const GET_CART = 'GET_CART'
-const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
-const CLEAR_CART = 'CLEAR_CART'
+const ADD_TO_CART = 'ADD_TO_CART';
+const GET_CART = 'GET_CART';
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+const CLEAR_CART = 'CLEAR_CART';
 
 /**
  * INITIAL STATE
@@ -24,6 +27,32 @@ export const clearCart = () => ({ type: CLEAR_CART });
 /**
  * THUNK CREATORS
  */
+
+export const postToCart = (itemToPost, userId, quantity) =>
+
+  function postOrderToCartThunk (dispatch, getState){
+    itemToPost.quantity = quantity;
+    axios.post(`/api/orders/${userId}`, itemToPost)
+      .then(res=>res.data)
+      .catch(console.error)
+  };
+
+export const saveCart = (order, orderId) =>
+
+  function saveCartThunk (dispatch, getState){
+    axios.put(`/api/orders/${orderId}`, order)
+      .then(res=>res.data)
+      .catch(console.error);
+  };
+
+export const fetchCartOrder = (userId) =>
+  dispatch =>
+    axios.get(`/api/orders/${userId}`)
+      .then( res => res.data)
+      .then( fetchedOrder => {
+        dispatch(getCart(fetchedOrder.orderItems))
+      })
+      .catch(err => {});
 
 
 /**

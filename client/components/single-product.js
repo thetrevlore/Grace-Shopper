@@ -8,7 +8,7 @@ const SingleProduct = props => {
   const itemId = +props.match.params.id
   const { products } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
-git
+
   return (
     <div>
       <h1>{selectedProduct.title}</h1>
@@ -37,7 +37,7 @@ git
 
 const mapStateToProps = (state) => ({
   products: state.products,
-  cart:state.cart })
+  cart: state.cart })
 
 const mapDispatchToProps = (dispatch) => {
   return {
