@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import {logout} from '../store'
-import {saveCart} from "../store/cart";
+import {logout, clearCart} from '../store'
 
 /**
  * COMPONENT
@@ -13,13 +12,6 @@ import {saveCart} from "../store/cart";
  */
 const Main = (props) => {
   const {children, handleClick, isLoggedIn, user, cartArray, orderId} = props;
-  console.log("order", props.order)
-  const orderToSave = {
-    userId: user.id,
-    email: user.email,
-    orderItems: cartArray,
-    status: 'Created'
-  };
 
   return (
     <div>
@@ -32,7 +24,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
-              <a href="#" onClick={()=>handleClick(orderToSave, orderId)}>Logout</a>
+              <a href="#" onClick={()=>handleClick()}>Logout</a>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -61,9 +53,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick (orderToSave, orderId) {
-      const saveCartThunk = saveCart(orderToSave, orderId);
-      dispatch(saveCartThunk);
+    handleClick () {
       dispatch(logout())
     }
   }

@@ -25,11 +25,11 @@ router.post('/', (req, res, next) => {
 
   return Order.findOne({
     where:{
-      userId: req.body.userId,
+      userId: body.userId,
       status: 'Created'
     }
   })
-    .then(foundOrder=> foundOrder.update({status: 'Completed'}))
+    .then(foundOrder=> foundOrder.update({status: 'Completed', shippingAddress: body.shippingAddress }))
     .then((order) => res.status(201).json(order)).catch(next)
 });
 

@@ -85,7 +85,7 @@ export default function (state = initialState, action) {
       return newState
 
     case CLEAR_CART:
-      return initialState;
+      return newState = {};
 
     default:
       return state

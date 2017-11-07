@@ -27,8 +27,11 @@ class Routes extends Component {
   componentWillReceiveProps(nextProps){
     console.log("nextprops:", nextProps)
     console.log('userID from routes', this.state);
-    const getCartThunk = fetchCartOrder(store.getState().user.id);
-    store.dispatch(getCartThunk)
+    const userId = store.getState().user.id
+    if(userId) {
+      const getCartThunk = fetchCartOrder(store.getState().user.id);
+      store.dispatch(getCartThunk)
+    }
   }
 
   render () {
