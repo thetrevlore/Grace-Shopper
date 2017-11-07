@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store, {fetchOrder} from '../store'
+import store, { fetchOrder } from '../store'
 
 export class SingleOrder extends Component {
 
@@ -10,11 +10,15 @@ export class SingleOrder extends Component {
     store.dispatch(fetchOrder(orderId))
   }
 
-  render () {
-    const {orderItems} = this.props
-    return(
+  render() {
+    const { orderItems } = this.props;
+    console.log(orderItems);
+
+    if (orderItems) {
+      const total = orderItems.reduce((acc, cur) => acc += cur.quantity * cur.price, 0);
+    return (
       <div>
-        <h1>Single Order</h1>
+        <h3>Single Order</h3>
         <table>
           <thead>
             <tr>
@@ -25,20 +29,24 @@ export class SingleOrder extends Component {
             </tr>
           </thead>
           <tbody>
-            {orderItems && orderItems.map((item, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>{item.title}</td>
-                  <td>{item.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>${item.price * item.quantity}</td>
-                </tr>
-              )
-            })}
-            </tbody>
-          </table>
+            {
+              orderItems && orderItems.map((item, idx) => {
+                return (
+                  <tr key={idx}>
+                    <td>{item.title}</td>
+                    <td>{item.price}</td>
+                    <td>{item.quantity}</td>
+                    <td>${item.price * item.quantity}.00</td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>
+        <h3>{`TOTAL: $${total}.00`}</h3>
       </div>
     )
+  } else return <h3>No order to display</h3>
   }
 }
 /**CONTAINER*/
@@ -49,6 +57,6 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatchToProps = {fetchOrder}
+const mapDispatchToProps = { fetchOrder }
 
 export default withRouter(connect(mapState, mapDispatchToProps)(SingleOrder))
