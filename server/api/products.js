@@ -26,6 +26,7 @@ router.get('/:productId', (req, res, next) => {
 });
 
 router.put('/:productId', (req, res, next) => {
+  console.log('REQBOD', req.body)
   Product.find({
     where: {
       id: +req.params.productId

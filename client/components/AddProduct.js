@@ -52,7 +52,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const postToCartThunk = postToCart(orderToSave, userId, quantity)
       dispatch(postToCartThunk);
       selectedProduct.inventoryAmount-=quantity;
-      const updateInventoryThunk = updateInventory(selectedProduct)
+      console.log('UPDATEINVENTORYAMOUNT',selectedProduct.inventoryAmount)
+      const updateInventoryThunk = updateInventory(selectedProduct.id, selectedProduct.inventoryAmount)
       dispatch(updateInventoryThunk);
       ownProps.history.push('/products');
     }

@@ -2,7 +2,9 @@ import React from 'react';
 
 const CartList = (props) => {
   const cartItems = props.items;
-  const { products } = props
+  const { products, orderId } = props
+  console.log('ORDERID',orderId)
+
 
   return (
     <div>
@@ -25,7 +27,8 @@ const CartList = (props) => {
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
                 <td><button onClick={()=>{
-                  props.delete(item, products.filter(product => +product.id === +item.productId)[0])
+                  console.log('PRODUCT!', products.filter(product => +product.id === +item.id)[0])
+                  props.delete(item.productId, orderId, products.filter(product => +product.id === +item.id)[0] + item.quantity)
                 }
                 }>&times;</button></td>
               </tr>

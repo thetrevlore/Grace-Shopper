@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {addOrderId} from './order'
 
 /**
  * ACTION TYPES
@@ -21,7 +21,7 @@ const initialState = {}
 
 export const addToCart = (product, quantity) => ({ type: ADD_TO_CART, product, quantity });
 export const getCart = cart => ({ type: GET_CART, cart });
-export const removeFromCart = itemId => ({ type: REMOVE_FROM_CART, itemId })
+export const removeFromCart = itemProductId => ({ type: REMOVE_FROM_CART, itemProductId })
 export const clearCart = () => ({ type: CLEAR_CART });
 
 /**
@@ -50,7 +50,14 @@ export const fetchCartOrder = (userId) =>
     axios.get(`/api/orders/${userId}`)
       .then( res => res.data)
       .then( fetchedOrder => {
-        dispatch(getCart(fetchedOrder.orderItems))
+        console.log('!!!!!',fetchedOrder)
+        const cart = {};
+        fetchedOrder.orderItems.map(item =>{
+          console.log()
+          cart[+item.id]=item
+        })
+        dispatch(getCart(cart))
+        dispatch(addOrderId(fetchedOrder.id))
       })
       .catch(err => {});
 
@@ -85,7 +92,7 @@ export default function (state = initialState, action) {
       return newState
 
     case CLEAR_CART:
-      return newState = {};
+      return initialState;
 
     default:
       return state

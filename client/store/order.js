@@ -1,17 +1,19 @@
 import axios from 'axios'
+import {removeFromCart, updateInventory} from './index'
 
-const initialState = []
+const initialState = 0
 /**
  * ACTION TYPES
  */
 
-const ADD_ORDER = 'ADD_ORDER';
+const ADD_ORDER_ID = 'ADD_ORDER_ID';
+
 
 /**
  * ACTION CREATORS
  */
 
-const addOrder = order => ({ action: ADD_ORDER, order })
+export const addOrderId = orderId => ({ type: ADD_ORDER_ID, orderId });
 
 /**
  * THUNK CREATORS
@@ -27,14 +29,25 @@ export const postOrder = (order, history) =>
       })
       .catch(console.error);
   };
+
+export const removeItemFromOrder = (itemProductId, orderId, updatedInventoryAmount) =>
+  dispatch => {
+  axios.delete(`/api/order-items/${orderId}/${itemProductId}`)
+    .catch(console.error)
+    dispatch(removeFromCart(itemProductId))
+    console.log('!!!!!!!!!!!!!!!!!!')
+    const updateInventoryThunk = updateInventory(itemProductId, updatedInventoryAmount);
+    dispatch(updateInventoryThunk)
+  }
+
 /**
  * REDUCER
  */
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case ADD_ORDER:
-      return [...state, action.order];
+    case ADD_ORDER_ID:
+      return action.orderId;
     default:
       return state
   }
