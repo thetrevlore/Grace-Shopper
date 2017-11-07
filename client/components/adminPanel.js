@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {fetchAllUsers, fetchAllOrders, fetchAllProducts, makeAdmin} from '../store';
 import AdminProducts from './adminProducts';
 import AdminUsers from './adminUsers';
+import {removeUser, deleteProduct} from "../store/admin";
 
 class AdminPanel extends Component {
   constructor(props){
@@ -19,9 +20,9 @@ class AdminPanel extends Component {
     return (
       <div>
         <h3>Products</h3>
-        <AdminProducts items={products} />
+        <AdminProducts items={products} delete={this.props.deleteProduct}/>
         <h3>Users</h3>
-        <AdminUsers users={users} promote={this.props.promoteUser} />
+        <AdminUsers users={users} promote={this.props.promoteUser} remove={this.props.deleteUser} />
       </div>
     )
   }
@@ -42,6 +43,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     promoteUser(id) {
       dispatch(makeAdmin(id));
+    },
+    deleteUser(id){
+      dispatch(removeUser(id))
+    },
+    deleteProduct(id){
+      dispatch(deleteProduct(id))
     }
   }
 }

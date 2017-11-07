@@ -26,7 +26,7 @@ const AdminProducts = (props) => {
                 <td>{item.title}</td>
                 <td>{`$${item.price}`}</td>
                 <td>{item.inventoryAmount}</td>
-                <td><button onClick={() => { props.delete(item, products.filter(product => +product.id === +item.productId)[0])}
+                <td><button onClick={() => { props.delete(item.id)}
                 }>&times;</button></td>
               </tr>
             )

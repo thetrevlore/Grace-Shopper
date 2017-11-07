@@ -9,6 +9,8 @@ const GET_ALL_ORDERS = 'GET_ALL_ORDERS';
 const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 const PROMOTE_USER = 'PROMOTE_USER';
 const DELETE_USER = 'DELETE_USER';
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+
 
 /**
  * INITIAL STATE
@@ -28,7 +30,9 @@ const getAllUsers = (users) => ({type: GET_ALL_USERS, users});
 const getAllOrders = (orders) => ({type: GET_ALL_ORDERS, orders});
 const getAllProducts = (products) => ({type: GET_ALL_PRODUCTS, products});
 const promoteUser = (user) => ({type: PROMOTE_USER, user});
-const deleteUser = (user) => ({type: DELETE_USER, user});
+const deleteUser = (userId) => ({type: DELETE_USER, userId});
+const removeProduct = (productId) => ({type: REMOVE_PRODUCT, productId });
+
 
 /**
  * THUNK CREATORS
@@ -66,8 +70,15 @@ export const makeAdmin = (id) =>
 export const removeUser = (id) =>
   dispatch =>
     axios.delete(`api/users/${id}`)
-      .then(res => dispatch(deleteUser(res.data)))
+      .then(res => dispatch(deleteUser(id)))
       .catch(err => console.log(err))
+
+export const deleteProduct = (id) =>
+  dispatch =>
+    axios.delete(`api/products/${id}`)
+      .then(res => dispatch(removeProduct(id)))
+      .catch(err => console.log(err))
+
 /**
  * REDUCER
  */
@@ -83,7 +94,9 @@ export default function (state = adminData, action) {
     case PROMOTE_USER:
       return Object.assign({}, state, {users: state.users.filter(user => user.id !== action.user.id).concat(action.user)});
     case DELETE_USER:
-      return Object.assign({}, state, {users: state.users.filter(user => user.id !== action.user.id)});
+      return Object.assign({}, state, {users: state.users.filter(user => user.id !== action.userId)});
+    case REMOVE_PRODUCT:
+      return Object.assign({}, state, {products: state.products.filter(product => product.id !== action.productId)});
     default:
       return state
   }
