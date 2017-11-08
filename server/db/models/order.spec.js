@@ -36,16 +36,33 @@ describe('Order model', () => {
         }).catch(console.error)
       });
 
-      it('returns correct productId', (done) => {
+      xit('returns correct productId', (done) => {
         expect(item.productId.to.be.equal(1))
         done()
       });
 
-      it('order id = items orderId', () => {
+      xit('order id = items orderId', () => {
         expect(item.orderId.to.be.equal(builtOrder.id))
       })
 
 
-    }) // end describe('correctPassword')
-  }) // end describe('instanceMethods')
-}) // end describe('User model')
+    });
+  });
+
+  it('has the expected schema definition', () => {
+    expect(Order.attributes.email).to.be.an('object');
+  });
+
+  describe('validations', () => {
+    it('require email', () => {
+      const order = Order.build();
+      return order.validate()
+        .then(() => { throw new Error('Promise should have rejected'); })
+        .catch(err => {
+          expect(err).to.be.an('error');
+
+        });
+    });
+  });
+
+})

@@ -27,7 +27,7 @@ export class UserHome extends Component {
     <div>
       {email
       ? <div>
-          <h3> {`Welcome, ${email}`} </h3>
+          <h3>{`Welcome, ${email}`}</h3>
             <h4>Order History</h4>
             <div>
               <table>

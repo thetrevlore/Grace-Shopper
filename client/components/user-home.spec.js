@@ -12,8 +12,10 @@ enzyme.configure({adapter})
 describe('UserHome', () => {
   let userHome
 
+  let spy = () => {}
+
   beforeEach(() => {
-    userHome = shallow(<UserHome email={'cody@email.com'} />)
+    userHome = shallow(<UserHome email={'cody@email.com'} fetchUserOrders={spy} />)
   })
 
   it('renders the email in an h3', () => {
