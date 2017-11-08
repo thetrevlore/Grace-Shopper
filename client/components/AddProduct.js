@@ -1,14 +1,14 @@
 import React from 'react'
-import { addToCart, updateInventory, postToCart } from '../store'
+import { updateInventory, postToCart } from '../store'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function AddProduct (props) {
 
   const { selectedProduct, handleSubmit, user, currentQuantityInCart } = props
-  const { inventoryAmount } = selectedProduct;
-  var quantity = 0;
-  const orderToPost = {
+
+  var quantity = 1;
+  var orderToPost = {
     userId: user.id,
     email: user.email,
     status: 'Created',
@@ -16,24 +16,25 @@ function AddProduct (props) {
       title: selectedProduct.title,
       productId: selectedProduct.id,
       price: selectedProduct.price
-    }
+    },
+    quantity:0
   }
 
   return (
-    <div>
-      <form>
+    <div className="d-flex justify-content-around">
+      <form className="addToCart">
+        <button className="addToCart" onClick={(e) => { handleSubmit(selectedProduct, quantity, orderToPost, user.id, selectedProduct.id, selectedProduct.inventoryAmount - quantity, e) }}>
+          Add to cart
+        </button>
         <select onChange={(e)=> { quantity = +e.target.value }} >
           {
             new Array(selectedProduct.inventoryAmount + 1).fill(0)
-              .map((_, index) => index)
+              .map((_, index) => index).filter(amount => amount !== 0)
               .map((amt) => <option key={amt} value={amt}>{amt}</option>)
           }
         </select>
       </form>
-      <button onClick={() => { handleSubmit(selectedProduct, quantity, orderToPost, user.id, selectedProduct.id, selectedProduct.inventoryAmount - quantity) }}>
-        Add to cart
-      </button>
-      <h5>{`${selectedProduct.title}s in cart: ${currentQuantityInCart}`}</h5>
+      <h5>{`In cart: ${currentQuantityInCart}`}</h5>
     </div>
   )
 }
@@ -48,7 +49,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleSubmit(selectedProduct, quantity, orderToSave, userId, selectedProductId, inventoryAmount){
+    handleSubmit(selectedProduct, quantity, orderToSave, userId, selectedProductId, inventoryAmount, e){
+      e.preventDefault()
+      console.log('QUANTITY', quantity)
       const postToCartThunk = postToCart(orderToSave, userId, quantity, selectedProduct);
       dispatch(postToCartThunk);
       const updateInventoryThunk = updateInventory(selectedProductId, inventoryAmount)
