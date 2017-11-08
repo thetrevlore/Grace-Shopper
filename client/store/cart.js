@@ -33,7 +33,7 @@ export const removeOneFromCart = (product) => ({ type: REMOVE_ONE, product });
 export const postToCart = (itemToPost, userId, quantity, product) =>
 
   function postOrderToCartThunk (dispatch, getState){
-    itemToPost.quantity = quantity;
+    itemToPost.quantity += quantity;
     axios.post(`/api/orders/${userId}`, itemToPost)
       .then(res=> {
         dispatch(addToCart(product, quantity));

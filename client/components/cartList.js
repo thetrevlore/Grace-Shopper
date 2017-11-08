@@ -30,6 +30,7 @@ const CartList = (props) => {
               userId: props.user.id,
               email: props.user.email,
               status: 'Created',
+              quantity: item.quantity,
               orderItem:{
                 title: item.title,
                 productId: item.productId,
