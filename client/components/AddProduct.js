@@ -1,12 +1,23 @@
 import React from 'react'
-import { addToCart, updateInventoryThunk } from '../store'
+import { addToCart, updateInventory, postToCart } from '../store'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function AddProduct (props) {
 
-  let { currentQuantityInCart, selectedProduct, value } = props
-  let quantity = 0;
+  const { selectedProduct, handleSubmit, user, currentQuantityInCart } = props
+  const { inventoryAmount } = selectedProduct;
+  var quantity = 0;
+  const orderToPost = {
+    userId: user.id,
+    email: user.email,
+    status: 'Created',
+    orderItem:{
+      title: selectedProduct.title,
+      productId: selectedProduct.id,
+      price: selectedProduct.price
+    }
+  }
 
   return (
     <div className="d-flex justify-content-around">
@@ -29,17 +40,20 @@ function AddProduct (props) {
 
 const mapStateToProps = (state, ownProps) => ({
   selectedProduct: ownProps.selectedProduct,
+  orderId: state.orderId,
+  user: state.user,
   cart: state.cart,
   value: ""
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleSubmit(selectedProduct, quantity){
-      dispatch(addToCart(selectedProduct, quantity))
-      selectedProduct.inventoryAmount-=quantity
-      dispatch(updateInventoryThunk(selectedProduct))
-      ownProps.history.push('/products')
+    handleSubmit(selectedProduct, quantity, orderToSave, userId, selectedProductId, inventoryAmount){
+      const postToCartThunk = postToCart(orderToSave, userId, quantity, selectedProduct);
+      dispatch(postToCartThunk);
+      const updateInventoryThunk = updateInventory(selectedProductId, inventoryAmount)
+      dispatch(updateInventoryThunk);
+      ownProps.history.push('/products');
     }
   }
 }

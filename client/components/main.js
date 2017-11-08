@@ -5,19 +5,21 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+
+  const {children, handleClick, isLoggedIn, isAdmin} = props
+
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
     position: "fixed", /* Set the navbar to fixed position */
     top: "0", /* Position the navbar at the top of the page */
     width: "100%" /* Full width */
-  }
+  };
 
   const containerStyle = {
     paddingTop: "130px",
     paddingLeft: "35px"
-  }
+  };
 
   return (
     <div>
@@ -31,15 +33,19 @@ const Main = (props) => {
               <li className="nav-item"><Link className="nav-link" to="/products">View Catalog</Link></li>
               <li className="nav-item"><Link className="nav-link" to="/cart">Cart</Link></li>
               <li className="nav-item"><Link className="nav-link" to="/home">My Account</Link></li>
+                {isAdmin && <li className="nav-item"><Link className="nav-link" to="/admin">Admin Panel</Link></li>}
               <li className="nav-item"><a className="nav-link" href="#" onClick={handleClick}>Logout</a></li>
               </ul>
             </div>
-            : <div>
+            :<div>
               {/* The navbar will show these links before you log in */}
               <Link className="nav-link" to="/products">View Catalog</Link>
               <Link className="nav-link" to="/login">Login</Link>
               <Link className="nav-link" to="/signup">Sign Up</Link>
             </div>
+        }
+        {
+
         }
       </nav>
       <hr />
@@ -55,7 +61,10 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
+    user: state.user,
+    orderId: state.orderId
   }
 };
 

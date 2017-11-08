@@ -2,13 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddProduct from './AddProduct'
-import { addToCart, postItemToCart, removeFromCart } from '../store';
+import { postItemToCart } from '../store';
 
 const SingleProduct = props => {
 
   const itemId = +props.match.params.id
   const { products, cart, addToCart } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
+
 
   return (
     <div>
@@ -39,7 +40,7 @@ const SingleProduct = props => {
 
 const mapStateToProps = (state) => ({
   products: state.products,
-  cart:state.cart })
+  cart: state.cart })
 
 const mapDispatchToProps = (dispatch) => ({})
 

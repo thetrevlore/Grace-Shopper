@@ -2,9 +2,10 @@ import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddProduct from './AddProduct'
-import { postItemToCart } from '../store';
+import { postItemToCart, addToCart } from '../store';
 
 function Products (props) {
+
   const { products, cart } = props;
 
   return (
@@ -41,7 +42,12 @@ const mapStateToProps = function (state) {
   }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({})
-
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (product, quantity) => {
+      dispatch(addToCart(product, quantity))
+    }
+  }
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Products));
