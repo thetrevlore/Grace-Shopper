@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateInventoryThunk, removeOneFromCart, addToCart } from '../store';
+import { updateInventory, removeOneFromCart, addToCart, postToCart } from '../store';
 
 const CartList = (props) => {
   const cartItems = props.items;
@@ -26,18 +26,28 @@ const CartList = (props) => {
           cartItems &&
           cartItems.map((item, idx) => {
             const targetedProduct = products.filter(product => +product.id === +item.productId)[0];
+            const orderToPost = {
+              userId: props.user.id,
+              email: props.user.email,
+              status: 'Created',
+              orderItem:{
+                title: item.title,
+                productId: item.productId,
+                price: item.price
+              }
+            }
              return (
               <tr key={idx}>
                 <td>{item.title}</td>
                 <td>{`$${+item.price * (+item.quantity)}.00`}</td>
                 <td>
                   { item.quantity > 1 &&
-                    <button onClick={()=>{props.decrementQuantity(item, targetedProduct)}}>-</button>
+                    <button onClick={()=>{props.decrementQuantity(item, targetedProduct, props.user.id, orderToPost, targetedProduct.inventoryAmount+1)}}>-</button>
                   }
                   {` ${item.quantity} `}
                   {
-                    targetedProduct.inventoryAmount >= 0 &&
-                    <button onClick={()=>props.incrementQuantity(item, targetedProduct)}>+</button>
+                    targetedProduct.inventoryAmount > 0 &&
+                    <button onClick={()=>props.incrementQuantity(item, targetedProduct, props.user.id, orderToPost, targetedProduct.inventoryAmount-1)}>+</button>
                   }
                 </td>
                 
@@ -52,21 +62,28 @@ const CartList = (props) => {
     </div>)
 }
 
-const mapState = (state) => ({});
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  cart: state.cart,
+  value: ""
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    decrementQuantity(item, selectedProduct){
-        dispatch(removeOneFromCart(selectedProduct))
-        selectedProduct.inventoryAmount+=1
-        dispatch(updateInventoryThunk(selectedProduct))
+    decrementQuantity(item, selectedProduct, userId, orderToSave, inventoryAmount){
+      const postToCartThunk = postToCart(orderToSave, userId, -1, selectedProduct);
+      dispatch(postToCartThunk);
+      const updateInventoryThunk = updateInventory(selectedProduct.id, inventoryAmount)
+      dispatch(updateInventoryThunk);
     },
-    incrementQuantity(item, selectedProduct){
-        dispatch(addToCart(selectedProduct, 1))
-        selectedProduct.inventoryAmount-=1
-        dispatch(updateInventoryThunk(selectedProduct))
+    incrementQuantity(item, selectedProduct, userId, orderToSave, inventoryAmount){
+      const postToCartThunk = postToCart(orderToSave, userId, 1, selectedProduct);
+      dispatch(postToCartThunk);
+      const updateInventoryThunk = updateInventory(selectedProduct.id, inventoryAmount)
+      dispatch(updateInventoryThunk);
     }
   }
 }
 
-export default withRouter(connect(mapState, mapDispatchToProps)(CartList));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartList));
