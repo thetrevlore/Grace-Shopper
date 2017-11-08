@@ -18,31 +18,31 @@ const Main = (props) => {
 
   const containerStyle = {
     paddingTop: "130px",
+    margin: "0 25px 0 25px"
   };
 
   return (
     <div>
-      <nav className="navBar" style={navStyle}>
-        <Link to="/"><h1 id="navlogo">The Money Store</h1></Link>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style={navStyle}>
+        <Link className="navbar-brand" to="/"><h1 id="navlogo">The Money Store</h1></Link>
         {
           isLoggedIn
-            ? <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/products">View Catalog</Link>
-              <Link to="/cart">Cart</Link>
-              <Link to="/home">My Account</Link>
-              {isAdmin && <Link to="/admin">Admin Panel</Link>}
-              <a href="#" onClick={handleClick}>Logout</a>
+            ? <div className="collapse navbar-collapse" id="navbarResponsive">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item"><Link className="nav-link" to="/products">View Catalog</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/cart">Cart</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/home">My Account</Link></li>
+                {isAdmin && <li className="nav-item"><Link className="nav-link" to="/admin">Admin Panel</Link></li>}
+                <li className="nav-item"><a className="nav-link" href="#" onClick={handleClick}>Logout</a></li>
+              </ul>
             </div>
-            : <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/products">View Catalog</Link>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+            :<div className="collapse navbar-collapse" id="navbarResponsive">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item"><Link className="nav-link" to="/products">View Catalog</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/signup">Sign Up</Link></li>
+              </ul>
             </div>
-        }
-        {
-
         }
       </nav>
       <hr />

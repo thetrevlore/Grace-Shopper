@@ -11,29 +11,26 @@ function Products (props) {
   return (
     <div>
       <h1>Products</h1>
-      {
-        products.map(product => {
-            return (
-              <div key={product.id}>
-                <div>
-                  <h3><span>{product.title}</span></h3>
-                </div>
-                <NavLink to={`/products/${product.id}`}>
-                  <img src={product.photos[0]} width="200" height="200" />
-                  <div>
-                    <h5><span>{product.description}</span>
-                    <span>{`     $${product.price}`}</span></h5>
+      <div className="row">
+        {
+          products.map(product => (
+            <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
+              <div className="card h-100">
+                <NavLink to={`/products/${product.id}`}><img className="card-img-top" src={product.photos[0]} width="300" height="130" /></NavLink>
+                <div className="card-body">
+                  <h4 className="card-title">{product.title}</h4>
+                  <h5>{`$${product.price}`}</h5>
+                  <div className="card-footer">
+                    <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                   </div>
-                </NavLink>
+                </div>
                 <AddProduct
                   selectedProduct={product}
                   currentQuantityInCart={ cart[product.id] && cart[product.id].quantity || 0 }
                 />
               </div>
-            )
-          }
-        )
-      }
+            </div>))}
+      </div>
     </div>
   )
 }
