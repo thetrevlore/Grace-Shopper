@@ -5,8 +5,9 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
-
-  const {children, handleClick, isLoggedIn} = props;
+  
+  const {children, handleClick, isLoggedIn, isAdmin} = props
+  
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
@@ -30,7 +31,8 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
-              <a href="#" onClick={()=>handleClick()}>Logout</a>
+              {isAdmin && <Link to="/admin">Admin Panel</Link>}
+              <a href="#" onClick={handleClick}>Logout</a>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -38,6 +40,9 @@ const Main = (props) => {
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
             </div>
+        }
+        {
+    
         }
       </nav>
       <hr />
@@ -54,6 +59,7 @@ const Main = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
     user: state.user,
     orderId: state.orderId
   }

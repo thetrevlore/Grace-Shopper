@@ -38,4 +38,14 @@ router.put('/:productId', (req, res, next) => {
   .catch(next)
 });
 
+router.delete('/:productId', (req, res, next) => {
+  Product.destroy({
+    where: {
+      id: req.params.productId
+    }
+  })
+    .then(() => res.sendStatus(204))
+    .catch(next);
+})
+
 module.exports = router
