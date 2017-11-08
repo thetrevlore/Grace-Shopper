@@ -37,7 +37,6 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
             <Route path="/order-confirmation/:orderId" component={OrderConfirmation} />
-            <Route path="/home" component={UserHome} />
             <Route path="/admin" component={AdminPanel} />
             <Route exact path="/home/orders/:id" component={SingleOrder} />
             <Route exact path="/home" component={UserHome} />
