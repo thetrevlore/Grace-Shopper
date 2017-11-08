@@ -10,10 +10,9 @@ const Order = db.define('order', {
   email: {
     type: Sequelize.STRING,
     validate: {
-    isEmail: true
+      isEmail: true
     }
-  },
-  hasBeenPlaced: { type: Sequelize.BOOLEAN, defaultValue: false }
+  }
 })
 
-module.exports = Order
+module.exports = Order;

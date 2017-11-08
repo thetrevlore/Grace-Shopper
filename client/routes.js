@@ -4,8 +4,8 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Products, SingleProduct, Cart, Welcome, NotFound, OrderConfirmation, SingleOrder} from './components'
-import store, {me, fetchProducts} from './store'
+import {Main, Login, Signup, UserHome, Products, SingleProduct, Cart, Welcome, NotFound, OrderConfirmation, AdminPanel, SingleOrder} from './components'
+import store, {me, fetchProducts, fetchCartOrder, fetchOrderId} from './store'
 
 /**
  * COMPONENT
@@ -23,6 +23,16 @@ class Routes extends Component {
     store.dispatch(userThunk);
   }
 
+  componentWillReceiveProps(nextProps){
+    const userId = store.getState().user.id
+    if(userId) {
+      const getCartThunk = fetchCartOrder(userId);
+      store.dispatch(getCartThunk)
+      const fetchOrderIdThunk = fetchOrderId(userId)
+      store.dispatch(fetchOrderIdThunk)
+    }
+  }
+
   render () {
     const {isLoggedIn} = this.props
     return (
@@ -37,6 +47,7 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/cart" component={Cart} />
             <Route path="/order-confirmation/:orderId" component={OrderConfirmation} />
+            <Route path="/admin" component={AdminPanel} />
             <Route exact path="/home/orders/:id" component={SingleOrder} />
             <Route exact path="/home" component={UserHome} />
             <Route component={NotFound} />
@@ -54,7 +65,8 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

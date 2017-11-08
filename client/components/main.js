@@ -5,18 +5,20 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+
+  const {children, handleClick, isLoggedIn, isAdmin} = props
+
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
     position: "fixed", /* Set the navbar to fixed position */
     top: "0", /* Position the navbar at the top of the page */
     width: "100%" /* Full width */
-  }
+  };
 
   const containerStyle = {
     paddingTop: "130px",
-  }
+  };
 
   return (
     <div>
@@ -29,6 +31,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
+              {isAdmin && <Link to="/admin">Admin Panel</Link>}
               <a href="#" onClick={handleClick}>Logout</a>
             </div>
             : <div>
@@ -37,6 +40,9 @@ const Main = (props) => {
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
             </div>
+        }
+        {
+
         }
       </nav>
       <hr />
@@ -52,7 +58,10 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
+    user: state.user,
+    orderId: state.orderId
   }
 };
 
