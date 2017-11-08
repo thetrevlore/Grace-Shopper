@@ -16,7 +16,8 @@ export class SingleOrder extends Component {
 
     if (orderItems) {
       const total = orderItems.reduce((acc, cur) => acc += cur.quantity * cur.price, 0);
-      const orderId = this.props.match.params.id
+      const orderId = this.props.match.params.id;
+
     return (
       <div>
         <h4>Order {orderId}</h4>

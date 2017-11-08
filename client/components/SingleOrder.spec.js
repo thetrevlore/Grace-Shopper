@@ -10,17 +10,24 @@ import sinon from 'sinon';
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe('<SingleOrder />', () => {
-  // let singleOrder
 
-  // beforeEach(() => {
-  //   singleOrder = shallow(<SingleOrder match={{params: {id: 1}}}/>)
-  // })
+describe('SingleOrder component', () => {
+  let orderId
 
+  let spy = () => {}
 
+  beforeEach(() => {
+    orderId = shallow(<SingleOrder match={{params: {id: 1}}} fetchOrder={spy} />)
+  })
+
+  xit('renders the order id in an h4', () => {
+    expect(orderId.find('h4').text()).to.be.equal(1);
+  })
+})
+
+describe('SingleOrder component', () => {
 
   xit('calls componentWillMount', () => {
-    // singleOrder = shallow(<SingleOrder match={{params: {id: 1}}}/>)
     sinon.spy(SingleOrder.prototype, 'componentWillMount');
     const wrapper = mount(<SingleOrder />);
     expect(SingleOrder.prototype.componentWillMount).to.have.property('callCount', 1);
@@ -31,5 +38,6 @@ describe('<SingleOrder />', () => {
 
 
 
-
+// const wrapper = shallow(<MyComponent />);
+// expect(wrapper.find(Foo)).to.have.length(3);
 

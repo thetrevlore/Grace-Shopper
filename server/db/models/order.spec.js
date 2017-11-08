@@ -46,6 +46,23 @@ describe('Order model', () => {
       })
 
 
-    }) // end describe('correctPassword')
-  }) // end describe('instanceMethods')
-}) // end describe('User model')
+    });
+  });
+
+  it('has the expected schema definition', () => {
+    expect(Order.attributes.email).to.be.an('object');
+  });
+
+  describe('validations', () => {
+    it('require email', () => {
+      const order = Order.build();
+      return order.validate()
+        .then(() => { throw new Error('Promise should have rejected'); })
+        .catch(err => {
+          expect(err).to.be.an('error');
+
+        });
+    });
+  });
+
+})
