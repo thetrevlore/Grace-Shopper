@@ -8,7 +8,7 @@ function AddProduct (props) {
   const { selectedProduct, handleSubmit, user, currentQuantityInCart } = props
 
   var quantity = 1;
-  const orderToPost = {
+  var orderToPost = {
     userId: user.id,
     email: user.email,
     status: 'Created',
@@ -16,7 +16,8 @@ function AddProduct (props) {
       title: selectedProduct.title,
       productId: selectedProduct.id,
       price: selectedProduct.price
-    }
+    },
+    quantity:0
   }
 
   return (
