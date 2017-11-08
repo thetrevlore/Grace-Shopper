@@ -12,6 +12,7 @@ const AdminOrders = (props) => {
               <tr>
                 <th>Order ID</th>
                 <th>User ID</th>
+                <th>Status</th>
                 <th>Order Date</th>
                 <th>View Order</th>
               </tr>
@@ -22,6 +23,7 @@ const AdminOrders = (props) => {
                       <tr key={order.id}>
                         <td>{order.id}</td>
                         <td>{order.userId}</td>
+                        <td>{order.status}</td>
                         <td>{order.createdAt.slice(0,10)}</td>
                         <td><Link to = {`home/orders/${order.id}`}>
                           {<img src='https://cdn3.iconfinder.com/data/icons/touch-gesture-outline/512/double_click_touch_click_finger_hand_select_gesture-512.png'
