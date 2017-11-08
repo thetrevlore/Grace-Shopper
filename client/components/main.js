@@ -5,18 +5,19 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+
+  const {children, handleClick, isLoggedIn} = props;
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
     position: "fixed", /* Set the navbar to fixed position */
     top: "0", /* Position the navbar at the top of the page */
     width: "100%" /* Full width */
-  }
+  };
 
   const containerStyle = {
     paddingTop: "130px",
-  }
+  };
 
   return (
     <div>
@@ -29,7 +30,7 @@ const Main = (props) => {
               <Link to="/products">View Catalog</Link>
               <Link to="/cart">Cart</Link>
               <Link to="/home">My Account</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
+              <a href="#" onClick={()=>handleClick()}>Logout</a>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -52,7 +53,9 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user,
+    orderId: state.orderId
   }
 };
 
