@@ -10,7 +10,6 @@ const UPDATE_INVENTORY = 'UPDATE_INVENTORY';
  * ACTION CREATORS
  */
 const getAllProducts = products => ({type: GET_ALL_PRODUCTS, products })
-const updateInventory = product => ({type: UPDATE_INVENTORY, product });
 const updateInventoryStore = (productId, updatedInventoryAmount) => ({type: UPDATE_INVENTORY, productId, updatedInventoryAmount })
 
 /**
