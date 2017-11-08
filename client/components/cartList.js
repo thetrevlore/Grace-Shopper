@@ -7,7 +7,7 @@ const CartList = (props) => {
   const cartItems = props.items;
   const { products, orderId } = props;
   const total = cartItems.reduce((acc, cur) => acc+=cur.quantity * cur.price, 0)
-  
+
 
 
   return (
@@ -51,7 +51,7 @@ const CartList = (props) => {
                     <button onClick={()=>props.incrementQuantity(item, targetedProduct, props.user.id, orderToPost, targetedProduct.inventoryAmount-1)}>+</button>
                   }
                 </td>
-                
+
                 <td><button onClick={()=>{props.delete(item.productId, orderId, products.filter(product => +product.id === +item.productId)[0].inventoryAmount + item.quantity)}}>&times;</button></td>
               </tr>
             )
