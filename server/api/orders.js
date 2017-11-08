@@ -20,6 +20,17 @@ router.get('/:userId', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:orderId', (req, res, next) => {
+  Order.findOne(
+    { include: [{model: OrderItem}],
+      where: {
+      id: Number(req.params.orderId)
+    }}
+  )
+    .then(singleOrder => res.status(200).json(singleOrder))
+    .catch(next)
+})
+
 router.post('/', (req, res, next) => {
   const { body } = req;
 
