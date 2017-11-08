@@ -33,7 +33,6 @@ router.put('/:productId', (req, res, next) => {
   })
   .then(product => product.update(req.body))
   .then((result) =>{
-    console.log('RESSSS',result)
     return res.json(result)
   })
   .catch(next)

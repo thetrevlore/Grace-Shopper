@@ -74,7 +74,7 @@ export const fetchUserOrders = (userId) => {
 
 export const fetchOrder = (orderId) => {
   return function fetchOrderThunk (dispatch) {
-    axios.get(`/api/orders/${orderId}`)
+    axios.get(`/api/orders/byorder/${orderId}`)
     .then( res => res.data)
     .then((order) => {
       dispatch(getSingleOrder(order))

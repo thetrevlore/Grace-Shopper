@@ -34,7 +34,6 @@ export const auth = (email, password, method) =>
   dispatch =>
     axios.post(`/auth/${method}`, { email, password })
       .then(res => {
-        console.log('RESDATA',res.data)
         dispatch(getUser(res.data))
         dispatch(fetchOrderId(res.data.id))
         history.push('/home')

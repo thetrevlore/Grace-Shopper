@@ -20,7 +20,7 @@ router.get('/:userId', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:orderId', (req, res, next) => {
+router.get('/byorder/:orderId', (req, res, next) => {
   Order.findOne(
     { include: [{model: OrderItem}],
       where: {

@@ -10,7 +10,6 @@ const SingleProduct = props => {
   const { products, cart, addToCart } = props;
   const selectedProduct = products.filter(product => product.id === itemId)[0];
 
-  console.log('single product props', props)
 
   return (
     <div>
