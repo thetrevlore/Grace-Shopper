@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeFromCart, postOrder, clearCart, updateInventoryThunk } from '../store';
+import { postOrder, clearCart, removeItemFromOrder } from '../store';
 import CartList from './cartList';
 
 function Cart(props){
 
-    const { cartArray, products, handleSubmitOrder, removeFromCart } = props
-
+    const { cartArray, products, handleSubmitOrder, removeFromCart, orderId } = props
     const order = {
       userId: props.user.id,
       email: props.user.email,
       orderItems: props.cartArray,
-      status: 'Completed',
-      hasBeenPlaced: true
+      status: 'Completed'
     }
 
     return (
       <div>
         <h2>Your Cart</h2>
-        <CartList items={cartArray} delete={removeFromCart} products={products}/>
+        <CartList items={cartArray} delete={removeFromCart} products={products} orderId={orderId}/>
         <div>
         <h4>Enter shipping information:</h4>
         <form className="addForm" onSubmit={(e)=> handleSubmitOrder(e, order)}>
@@ -45,20 +43,21 @@ const mapStateToProps = (state) => ({
     return state.cart[item]
   }),
   user: state.user,
-  products: state.products
+  products: state.products,
+  orderId: state.order
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    removeFromCart: (item, product) => {
-      dispatch(removeFromCart(item.productId))
-      product.inventoryAmount+=item.quantity
-      dispatch(updateInventoryThunk(product))
+    removeFromCart: (itemProductId, orderId, updatedInventoryAmount ) => {
+      const removeItemfromOrderThunk = removeItemFromOrder(itemProductId, orderId, updatedInventoryAmount)
+      dispatch(removeItemfromOrderThunk);
     },
     handleSubmitOrder (evt, order) {
       evt.preventDefault();
-      order.shippingAddress = evt.target.address.value
-      dispatch(postOrder(order, ownProps.history));
+      order.shippingAddress = evt.target.address.value;
+      const postOrderThunk = postOrder(order, ownProps.history);
+      dispatch(postOrderThunk);
       dispatch(clearCart());
     },
   }

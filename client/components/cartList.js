@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { updateInventoryThunk, removeOneFromCart, addToCart } from '../store';
 
 const CartList = (props) => {
-
-  const { products } = props
   const cartItems = props.items;
+  const { products, orderId } = props;
   const total = cartItems.reduce((acc, cur) => acc+=cur.quantity * cur.price, 0)
   
+
 
   return (
     <div>
@@ -41,7 +41,7 @@ const CartList = (props) => {
                   }
                 </td>
                 
-                <td><button onClick={()=>{props.delete(item)}}>&times;</button></td>
+                <td><button onClick={()=>{props.delete(item.productId, orderId, products.filter(product => +product.id === +item.productId)[0].inventoryAmount + item.quantity)}}>&times;</button></td>
               </tr>
             )
           })
