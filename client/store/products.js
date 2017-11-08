@@ -11,6 +11,7 @@ const UPDATE_INVENTORY = 'UPDATE_INVENTORY';
  */
 const getAllProducts = products => ({type: GET_ALL_PRODUCTS, products })
 const updateInventory = product => ({type: UPDATE_INVENTORY, product });
+const updateInventoryStore = (productId, updatedInventoryAmount) => ({type: UPDATE_INVENTORY, productId, updatedInventoryAmount })
 
 /**
  * THUNK CREATORS
@@ -26,14 +27,16 @@ export const fetchProducts = () =>
       })
       .catch(err => console.log(err));
 
-export const updateInventoryThunk = (selectedProduct) =>
-  dispatch =>
-    axios.put(`/api/products/${selectedProduct.id}`, { inventoryAmount: +selectedProduct.inventoryAmount })
+export const updateInventory = (itemProductId, inventoryAmount) =>
+  dispatch =>{
+    axios.put(`/api/products/${itemProductId}`, { inventoryAmount: inventoryAmount })
       .then( res => res.data)
       .then(() => {
-        dispatch(updateInventory(selectedProduct))
+        dispatch(updateInventoryStore(itemProductId, inventoryAmount))
       })
       .catch(err => console.log(err));
+  }
+
 
 /**
  * REDUCER
@@ -42,12 +45,11 @@ export default function (products = [], action) {
   switch (action.type) {
 
     case UPDATE_INVENTORY:
-      products.filter(product => product.id === action.product.id)[0].inventoryAmount = action.product.inventoryAmount
+      products.filter(product => product.id === action.productId)[0].inventoryAmount = action.updatedInventoryAmount;
       return products
 
     case GET_ALL_PRODUCTS:
       return action.products;
-
 
     default:
       return products

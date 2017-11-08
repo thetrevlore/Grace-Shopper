@@ -12,7 +12,6 @@ export class SingleOrder extends Component {
 
   render() {
     const { orderItems } = this.props;
-    console.log(orderItems);
 
     if (orderItems) {
       const total = orderItems.reduce((acc, cur) => acc += cur.quantity * cur.price, 0);

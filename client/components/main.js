@@ -5,18 +5,20 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Main = (props) => {
+  
   const {children, handleClick, isLoggedIn, isAdmin} = props
+  
   const navStyle = {
     overflow: "hidden",
     backgroundColor: "white",
     position: "fixed", /* Set the navbar to fixed position */
     top: "0", /* Position the navbar at the top of the page */
     width: "100%" /* Full width */
-  }
+  };
 
   const containerStyle = {
     paddingTop: "130px",
-  }
+  };
 
   return (
     <div>
@@ -58,6 +60,8 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
     isAdmin: !!state.user.isAdmin
+    user: state.user,
+    orderId: state.orderId
   }
 };
 
