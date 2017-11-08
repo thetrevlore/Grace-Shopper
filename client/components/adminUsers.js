@@ -25,7 +25,7 @@ const AdminUsers = (props) => {
                 <td>{user.id}</td>
                 <td>{user.email}</td>
                 <td>{user.isAdmin ? 'Yes' : 'No'}</td>
-                <td><button onClick={() => { props.promote(user.id)}}>Promote</button></td>
+                {user.isAdmin ? <td><button disabled onClick={() => { props.promote(user.id)}}>Promote</button></td> : <td><button onClick={() => { props.promote(user.id)}}>Promote</button></td>}
                 <td><button onClick={() =>{props.remove(user.id)}}>&times;</button></td>
               </tr>
             )
