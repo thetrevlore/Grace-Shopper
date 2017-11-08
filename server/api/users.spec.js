@@ -20,7 +20,7 @@ describe('User routes', () => {
       })
     })
 
-    it('GET /api/users', () => {
+    it('can GET all users via /api/users', () => {
       return request(app)
         .get('/api/users')
         .expect(200)
@@ -28,6 +28,18 @@ describe('User routes', () => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].email).to.be.equal(codysEmail)
         })
+    })
+
+    it('can GET a single user via /api/:userId', () => {
+      return request(app)
+        .get('/api/users/1')
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('object')
+          expect(res.body.id).to.be.equal(1)
+        })
+
+    
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')

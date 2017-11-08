@@ -4,7 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
-const UPDATE_INVENTORY = 'UPDATE_INVENTORY'
+const UPDATE_INVENTORY = 'UPDATE_INVENTORY';
 
 /**
  * ACTION CREATORS
@@ -49,6 +49,7 @@ export default function (products = [], action) {
 
     case GET_ALL_PRODUCTS:
       return action.products;
+
     default:
       return products
   }
