@@ -26,11 +26,13 @@ const SingleProduct = props => {
         <h3>Price</h3>
         <p>{selectedProduct.price}</p>
       </div>
+      <div id="addToCart">
       <AddProduct
         selectedProduct={selectedProduct}
         addToCart={addToCart}
         currentQuantityInCart={ cart[selectedProduct.id] && cart[selectedProduct.id].quantity || 0 }
       />
+      </div>
     </div>
   )
 }

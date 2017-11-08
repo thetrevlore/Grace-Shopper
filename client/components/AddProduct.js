@@ -9,21 +9,21 @@ function AddProduct (props) {
   let quantity = 0;
 
   return (
-    <div>
+    <div className="d-flex justify-content-around">
       <form>
+        <button id="addToCart" onClick={() => { props.handleSubmit(selectedProduct, quantity) }}>
+          Add to cart
+        </button>
         <select onChange={(e)=> { quantity = +e.target.value }} >
           {
             new Array(selectedProduct.inventoryAmount + 1).fill(0)
-              .map((_, index) => index)
+              .map((_, index) => index).filter(amount => amount !== 0)
               .map((amt) => <option key={amt} value={amt}>{amt}</option>)
           }
         </select>
       </form>
-      <button onClick={() => { props.handleSubmit(selectedProduct, quantity) }}>
-        Add to cart
-      </button>
       <h5>{`${selectedProduct.title}s in cart: ${currentQuantityInCart}`}</h5>
-    </div>
+      </div>
   )
 }
 

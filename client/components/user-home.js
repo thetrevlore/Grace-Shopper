@@ -11,7 +11,7 @@ export const UserHome = (props) => {
 
   return (
     <div>
-      <h3>{email ? `Welcome, ${email}` : 'Please log in to view your account.'}</h3>
+      <h3 className="my-4">{email ? `Welcome, ${email}` : 'Please log in to view your account.'}</h3>
       {!email && <Login />}
     </div>
   )
