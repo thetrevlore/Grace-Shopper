@@ -13,3 +13,4 @@ export {default as Welcome} from './welcome';
 export {default as NotFound} from './notfound';
 export {default as OrderConfirmation} from './OrderConfirmation';
 export {default as AdminPanel} from './adminpanel';
+export {default as SingleOrder} from './SingleOrder'

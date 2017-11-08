@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Products, SingleProduct, Cart, Welcome, NotFound, OrderConfirmation, AdminPanel} from './components'
+import {Main, Login, Signup, UserHome, Products, SingleProduct, Cart, Welcome, NotFound, OrderConfirmation, AdminPanel, SingleOrder} from './components'
 import store, {me, fetchProducts} from './store'
 
 /**
@@ -15,7 +15,6 @@ class Routes extends Component {
     super();
     this.state = store.getState();
   }
-
 
   componentWillMount() {
     const productsThunk = fetchProducts();
@@ -40,6 +39,8 @@ class Routes extends Component {
             <Route path="/order-confirmation/:orderId" component={OrderConfirmation} />
             <Route path="/home" component={UserHome} />
             <Route path="/admin" component={AdminPanel} />
+            <Route exact path="/home/orders/:id" component={SingleOrder} />
+            <Route exact path="/home" component={UserHome} />
             <Route component={NotFound} />
           </Switch>
         </Main>

@@ -7,6 +7,7 @@ import CartList from './cartList';
 function Cart(props){
 
     const { cartArray, products, handleSubmitOrder, removeFromCart } = props
+
     const order = {
       userId: props.user.id,
       email: props.user.email,
