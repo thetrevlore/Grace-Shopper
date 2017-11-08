@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {fetchAllUsers, fetchAllOrders, fetchAllProducts, makeAdmin} from '../store';
 import AdminProducts from './adminProducts';
 import AdminUsers from './adminUsers';
+import AdminOrders from './adminOrders';
 import {removeUser, deleteProduct} from "../store/admin";
 
 class AdminPanel extends Component {
@@ -15,7 +16,6 @@ class AdminPanel extends Component {
   }
 
   render () {
-    console.log("MY PROPSSSSSS", this.props)
     const {users, orders, products} = this.props.data;
     return (
       <div>
@@ -23,6 +23,8 @@ class AdminPanel extends Component {
         <AdminProducts items={products} delete={this.props.deleteProduct}/>
         <h3>Users</h3>
         <AdminUsers users={users} promote={this.props.promoteUser} remove={this.props.deleteUser} />
+        <h3>Orders</h3>
+        <AdminOrders orders={orders} />
       </div>
     )
   }
